@@ -18,11 +18,6 @@ const TodoList: FC<TodoListPropsType> = (
         title,
         tasks
     }) => {
-    //1.
-    /*const title = props.title
-    const tasks = props.tasks*/
-    //2.
-   // const {title, tasks} = props
 
     return (
         <div className='todolist'>
@@ -39,10 +34,6 @@ const TodoList: FC<TodoListPropsType> = (
                 <li>
                     <input type="checkbox" checked={tasks[1].isDone}/>
                     <span>{tasks[1].title}</span>
-                </li>
-                <li>
-                    <input type="checkbox" checked={tasks[2].isDone}/>
-                    <span>{tasks[2].title}</span>
                 </li>
             </ul>
             <div>
