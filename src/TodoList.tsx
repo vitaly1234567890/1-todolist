@@ -1,9 +1,14 @@
 import React, {FC} from 'react';
+import {FilterValuesType} from "./App";
+
+
 
 
 type TodoListPropsType = {
     title: string
     tasks: Array<TaskType>
+    removeTask: (taskId: number) => void
+    changeFilter: (nextFilterValue: FilterValuesType) => void
 }
 
 export type TaskType = {
@@ -13,11 +18,43 @@ export type TaskType = {
 }
 
 const TodoList: FC<TodoListPropsType> = (
-    {
-        //3.
-        title,
-        tasks
-    }) => {
+    {title,tasks, removeTask, changeFilter}) => {
+
+        // let tasksList: Array<JSX.Element> | JSX.Element;
+        // if (tasks.length === 0) {
+        //     tasksList = <span>Your tasklist is empty</span>
+        // } else {
+        //     const listItems: Array<JSX.Element> = []
+        //     for (let i = 0; i < tasks.length; i++) {
+        //         const newListItem = <li key={tasks[i].id}>
+        //             <input type="checkbox" checked={tasks[i].isDone}/>
+        //             <span>{tasks[i].title}</span>
+        //             <button>x</button>
+        //         </li>
+        //         listItems.push(newListItem)
+        //     }
+        //     tasksList = <ul>
+        //         {listItems}
+        //     </ul>
+        // }
+
+    const listItems: Array<JSX.Element> = tasks.map(t => {
+        const onClickRemoveTaskHandler = () => {removeTask(t.id)}
+
+        return (
+            <li key={t.id}>
+                <input type="checkbox" checked={t.isDone}/>
+                <span>{t.title}</span>
+                <button onClick={onClickRemoveTaskHandler}>x</button>
+            </li>
+        )
+    })
+
+
+    const tasksList: JSX.Element = tasks.length
+        ? <ul>{listItems}</ul>
+        : <span>Your tasklist is empty</span>
+
 
     return (
         <div className='todolist'>
@@ -26,20 +63,11 @@ const TodoList: FC<TodoListPropsType> = (
                 <input/>
                 <button>+</button>
             </div>
-            <ul>
-                <li>
-                    <input type="checkbox" checked={tasks[0].isDone}/>
-                    <span>{tasks[0].title}</span>
-                </li>
-                <li>
-                    <input type="checkbox" checked={tasks[1].isDone}/>
-                    <span>{tasks[1].title}</span>
-                </li>
-            </ul>
+                {tasksList}
             <div>
-                <button>All</button>
-                <button>Active</button>
-                <button>Completed</button>
+                <button onClick={() => changeFilter('All')}>All</button>
+                <button onClick={() => changeFilter('Active')}>Active</button>
+                <button onClick={() => changeFilter('Completed')}>Completed</button>
             </div>
         </div>
     )
