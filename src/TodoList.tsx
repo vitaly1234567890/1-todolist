@@ -20,24 +20,6 @@ export type TaskType = {
 const TodoList: FC<TodoListPropsType> = (
     {title,tasks, removeTask, changeFilter}) => {
 
-        // let tasksList: Array<JSX.Element> | JSX.Element;
-        // if (tasks.length === 0) {
-        //     tasksList = <span>Your tasklist is empty</span>
-        // } else {
-        //     const listItems: Array<JSX.Element> = []
-        //     for (let i = 0; i < tasks.length; i++) {
-        //         const newListItem = <li key={tasks[i].id}>
-        //             <input type="checkbox" checked={tasks[i].isDone}/>
-        //             <span>{tasks[i].title}</span>
-        //             <button>x</button>
-        //         </li>
-        //         listItems.push(newListItem)
-        //     }
-        //     tasksList = <ul>
-        //         {listItems}
-        //     </ul>
-        // }
-
     const listItems: Array<JSX.Element> = tasks.map(t => {
         const onClickRemoveTaskHandler = () => {removeTask(t.id)}
 
