@@ -14,12 +14,8 @@ function App() {
         {id: crypto.randomUUID(), isDone: true, title: 'HTML&CSS'},
         {id: crypto.randomUUID(), isDone: true, title: 'JS'},
         {id: crypto.randomUUID(), isDone: false, title: 'React'},
-        {id: crypto.randomUUID(), isDone: true, title: 'TS'},
+        {id: crypto.randomUUID(), isDone: false, title: 'TS'},
     ])
-
-    const removeTask = (taskId: string) => {
-        setTasks_1(tasks_1.filter(t => t.id !== taskId))
-    }
 
     const addTask = (title: string) => {
         const newTask: TaskType = {
@@ -29,6 +25,23 @@ function App() {
         }
         setTasks_1([newTask, ...tasks_1])
     }
+
+    const changeTaskStatus = (taskId: string, newIsDoneValue: boolean) => {
+        const updatedTask: Array<TaskType> = tasks_1.map( t => t.id === taskId
+        ? {...t, isDone: newIsDoneValue}
+            : t)
+        setTasks_1(updatedTask)
+    }
+
+    const changeTaskTitle = () => {
+
+    }
+
+    const removeTask = (taskId: string) => {
+        setTasks_1(tasks_1.filter(t => t.id !== taskId))
+    }
+
+
 
     const [filter, setFilter]
         = useState<FilterValuesType>('All')
@@ -56,6 +69,8 @@ function App() {
                 removeTask={removeTask}
                 changeFilter={changeFilter}
                 addTask={addTask}
+                changeTaskStatus={changeTaskStatus}
+                filter={filter}
                 />
         </div>
     );
