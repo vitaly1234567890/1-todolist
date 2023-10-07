@@ -13,7 +13,7 @@ function App() {
     const [tasks_1, setTasks_1] = useState<Array<TaskType>>([
         {id: crypto.randomUUID(), isDone: true, title: 'HTML&CSS'},
         {id: crypto.randomUUID(), isDone: true, title: 'JS'},
-        {id: crypto.randomUUID(), isDone: false, title: 'React'},
+        {id: crypto.randomUUID(), isDone: true, title: 'React'},
         {id: crypto.randomUUID(), isDone: false, title: 'TS'},
     ])
 
@@ -33,9 +33,6 @@ function App() {
         setTasks_1(updatedTask)
     }
 
-    const changeTaskTitle = () => {
-
-    }
 
     const removeTask = (taskId: string) => {
         setTasks_1(tasks_1.filter(t => t.id !== taskId))
