@@ -13,8 +13,9 @@ function App() {
     const [tasks_1, setTasks_1] = useState<Array<TaskType>>([
         {id: crypto.randomUUID(), isDone: true, title: 'HTML&CSS'},
         {id: crypto.randomUUID(), isDone: true, title: 'JS'},
-        {id: crypto.randomUUID(), isDone: true, title: 'React'},
+        {id: crypto.randomUUID(), isDone: false, title: 'React'},
         {id: crypto.randomUUID(), isDone: false, title: 'TS'},
+        {id: crypto.randomUUID(), isDone: false, title: 'Redux'},
     ])
 
     const addTask = (title: string) => {
