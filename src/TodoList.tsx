@@ -4,12 +4,14 @@ import {FilterValuesType} from "./App";
 
 type TodoListPropsType = {
     title: string
+    todolistsID: string
     tasks: Array<TaskType>
-    removeTask: (taskId: string) => void
-    changeFilter: (nextFilterValue: FilterValuesType) => void
-    addTask: (title: string) => void
-    changeTaskStatus: (taskId: string, newIsDoneValue: boolean) => void
+    removeTask: (todolistsID: string, taskId: string) => void
+    changeFilter: (todolistsID: string, nextFilterValue: FilterValuesType) => void
+    addTask: (todolistID: string, title: string) => void
+    changeTaskStatus: (todolistsID: string, taskId: string, newIsDoneValue: boolean) => void
     filter: FilterValuesType
+    removeTodoList: (todolistsID: string) => void
 }
 
 export type TaskType = {
@@ -26,6 +28,8 @@ const TodoList: FC<TodoListPropsType> = (
         addTask,
         changeTaskStatus,
         filter,
+        todolistsID,
+        removeTodoList,
     }) => {
 
     const [newTaskTitle, setNewTaskTitle] = useState("")
@@ -34,11 +38,11 @@ const TodoList: FC<TodoListPropsType> = (
 
     const listItems: Array<JSX.Element> = tasks.map(t => {
         const onClickRemoveTaskHandler = () => {
-            removeTask(t.id)
+            removeTask(todolistsID, t.id)
         }
 
         const onChangeTaskStatusHandler =
-            (e:ChangeEvent<HTMLInputElement>) => {changeTaskStatus(t.id, e.currentTarget.checked)}
+            (e:ChangeEvent<HTMLInputElement>) => {changeTaskStatus(todolistsID, t.id, e.currentTarget.checked)}
 
         return (
             <li key={t.id}>
@@ -61,7 +65,7 @@ const TodoList: FC<TodoListPropsType> = (
     const onClickAddTask = () => {
         const trimmedTitle = newTaskTitle.trim()
         if(trimmedTitle){
-            addTask(trimmedTitle)
+            addTask(todolistsID,trimmedTitle)
         } else {
             setInputError(true)
         }
@@ -86,10 +90,14 @@ const TodoList: FC<TodoListPropsType> = (
         ? <span>Enter new title</span>
         : <span style={{color: "red"}}> Your title is too long</span>
 
+    const removeTodoListHandler = () => {removeTodoList(todolistsID)}
+
     return (
         <div className='todolist'>
-            <h3>{title}
-            </h3>
+                <h3>
+                    {title}
+                    <button onClick={ removeTodoListHandler }>X</button>
+                </h3>
             <div>
                 <input
                     value={newTaskTitle}
@@ -110,15 +118,15 @@ const TodoList: FC<TodoListPropsType> = (
             <div>
                 <button
                     className={filter === 'All' ? "btn-active" : undefined}
-                    onClick={() => changeFilter('All')}
+                    onClick={() => changeFilter(todolistsID,'All',)}
                 >All</button>
                 <button
                     className={filter === 'Active' ? "btn-active" : undefined}
-                    onClick={() => changeFilter('Active')}
+                    onClick={() => changeFilter(todolistsID,'Active')}
                 >Active</button>
                 <button
                     className={filter === 'Completed' ? "btn-active" : undefined}
-                    onClick={() => changeFilter('Completed')}
+                    onClick={() => changeFilter(todolistsID,'Completed')}
                 >Completed</button>
             </div>
         </div>
