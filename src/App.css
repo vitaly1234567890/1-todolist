@@ -1,14 +1,14 @@
-.App {
-  padding: 30px;
-  display: flex;
-  background-color: aquamarine;
-  height: 100vh;
+/*.App {*/
+/*  padding: 30px;*/
+/*  display: flex;*/
+/*  background-color: aquamarine;*/
+/*  height: 100vh;*/
 
-}
+/*}*/
 
-.App > div {
-  margin-right: 50px;
-}
+/*.App > div {*/
+/*  margin-right: 50px;*/
+/*}*/
 
 .todolist {
   border: 2px solid grey;

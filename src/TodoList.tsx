@@ -1,5 +1,11 @@
-import React, {FC, useState, KeyboardEvent, ChangeEvent} from 'react';
+import React, {ChangeEvent, FC} from 'react';
 import {FilterValuesType} from "./App";
+import {AddItemForm} from "./AddItemForm";
+import {EditableSpan} from "./EditableSpan";
+import {Button, Checkbox, IconButton, List, ListItem, Paper, Typography} from "@mui/material";
+import DeleteForeverIcon from '@mui/icons-material/DeleteForever';
+import HighlightOffIcon from '@mui/icons-material/HighlightOff';
+import ListItemSecondaryAction from '@mui/material/ListItemSecondaryAction';
 
 
 type TodoListPropsType = {
@@ -7,9 +13,11 @@ type TodoListPropsType = {
     todolistsID: string
     tasks: Array<TaskType>
     removeTask: (todolistsID: string, taskId: string) => void
+    changeTodoListTitle: (todolistsID: string, newTitle: string) => void
     changeFilter: (todolistsID: string, nextFilterValue: FilterValuesType) => void
     addTask: (todolistID: string, title: string) => void
     changeTaskStatus: (todolistsID: string, taskId: string, newIsDoneValue: boolean) => void
+    changeTaskTitle: (todolistsID: string, taskId: string, value: string) => void
     filter: FilterValuesType
     removeTodoList: (todolistsID: string) => void
 }
@@ -20,8 +28,9 @@ export type TaskType = {
     isDone: boolean
 }
 
-const TodoList: FC<TodoListPropsType> = (
-    {title,
+export const TodoList: FC<TodoListPropsType> = (
+    {
+        title,
         tasks,
         removeTask,
         changeFilter,
@@ -30,11 +39,9 @@ const TodoList: FC<TodoListPropsType> = (
         filter,
         todolistsID,
         removeTodoList,
+        changeTaskTitle,
+        changeTodoListTitle
     }) => {
-
-    const [newTaskTitle, setNewTaskTitle] = useState("")
-    const [inputError, setInputError] = useState(false)
-
 
     const listItems: Array<JSX.Element> = tasks.map(t => {
         const onClickRemoveTaskHandler = () => {
@@ -42,95 +49,91 @@ const TodoList: FC<TodoListPropsType> = (
         }
 
         const onChangeTaskStatusHandler =
-            (e:ChangeEvent<HTMLInputElement>) => {changeTaskStatus(todolistsID, t.id, e.currentTarget.checked)}
+            (e: ChangeEvent<HTMLInputElement>) => {
+                changeTaskStatus(todolistsID, t.id, e.currentTarget.checked)
+            }
+
+        const onChangeTaskTitleHandler = (newValue: string) => {
+            changeTaskTitle(todolistsID, t.id, newValue)
+        }
 
         return (
-            <li key={t.id}>
-                <input
-                    onChange={onChangeTaskStatusHandler}
-                    type="checkbox"
-                    checked={t.isDone}
-                />
-                <span className={t.isDone ? "task-done" : "task" }>{t.title}</span>
-                <button onClick={onClickRemoveTaskHandler}>x</button>
-            </li>
+            <Paper sx={{m: "10px"}}
+                   elevation={5}
+            >
+                <ListItem
+                    sx={{p: "0"}}
+                    key={t.id}>
+                    <Checkbox
+                        onChange={onChangeTaskStatusHandler}
+                        checked={t.isDone}
+                    />
+                    <span className={t.isDone ? "task-done" : "task"}>
+                    <EditableSpan title={t.title} onChange={onChangeTaskTitleHandler}/>
+                </span>
+                    <ListItemSecondaryAction>
+                        <IconButton onClick={onClickRemoveTaskHandler} size="small" color="primary">
+                            <HighlightOffIcon/>
+                        </IconButton>
+                    </ListItemSecondaryAction>
+                </ListItem>
+            </Paper>
         )
     })
 
     const tasksList: JSX.Element = tasks.length
-        ? <ul>{listItems}</ul>
+        ? <List>{listItems}</List>
         : <span>Your tasklist is empty</span>
 
-
-    const onClickAddTask = () => {
-        const trimmedTitle = newTaskTitle.trim()
-        if(trimmedTitle){
-            addTask(todolistsID,trimmedTitle)
-        } else {
-            setInputError(true)
-        }
-        setNewTaskTitle("")
+    const removeTodoListHandler = () => {
+        removeTodoList(todolistsID)
     }
 
-    const onKeyDownAddTask = (event: KeyboardEvent<HTMLInputElement>) => {
-        event.key === 'enter' && onClickAddTask()
+    const changeTodoListTitled = (newTitle: string) => {
+        changeTodoListTitle(todolistsID, newTitle)
     }
 
-    const onChangeHandler = (e: ChangeEvent<HTMLInputElement>) => {
-        setNewTaskTitle(e.currentTarget.value)
-        inputError && setInputError(false)
+    const addedTask = (title: string) => {
+        addTask(todolistsID, title)
     }
-
-
-    const isAddBtnDisabled = !newTaskTitle || newTaskTitle.length >= 15
-
-    const userMessage = inputError
-        ? <span style={{color: "red"}}> Your title is too empty</span>
-        : newTaskTitle.length < 15
-        ? <span>Enter new title</span>
-        : <span style={{color: "red"}}> Your title is too long</span>
-
-    const removeTodoListHandler = () => {removeTodoList(todolistsID)}
 
     return (
         <div className='todolist'>
-                <h3>
-                    {title}
-                    <button onClick={ removeTodoListHandler }>X</button>
-                </h3>
-            <div>
-                <input
-                    value={newTaskTitle}
-                    onChange={onChangeHandler}
-                    onKeyDown={onKeyDownAddTask}
-                    className={inputError ? "input-error" : undefined}
-                />
-                <button
-                    disabled={isAddBtnDisabled}
-                    onClick={onClickAddTask}
-                >+
-                </button>
-                <div>
-                    {userMessage}
-                </div>
-            </div>
+            <Paper sx={{p: '5px'}} elevation={5}>
+                <Typography textAlign="center" variant="h5" fontWeight="bold">
+                    <EditableSpan title={title} onChange={changeTodoListTitled}/>
+                    <IconButton onClick={removeTodoListHandler} size="small" color="primary">
+                        <DeleteForeverIcon/>
+                    </IconButton>
+                </Typography>
+
+                <AddItemForm addItem={addedTask}/>
+            </Paper>
             {tasksList}
-            <div>
-                <button
-                    className={filter === 'All' ? "btn-active" : undefined}
-                    onClick={() => changeFilter(todolistsID,'All',)}
-                >All</button>
-                <button
-                    className={filter === 'Active' ? "btn-active" : undefined}
-                    onClick={() => changeFilter(todolistsID,'Active')}
-                >Active</button>
-                <button
-                    className={filter === 'Completed' ? "btn-active" : undefined}
-                    onClick={() => changeFilter(todolistsID,'Completed')}
-                >Completed</button>
+            <div style={{display:"flex", justifyContent: "space-around"}}>
+                <Button
+                    variant="contained"
+                    color={filter === 'All' ? "secondary" : "primary"}
+                    size="small"
+                    disableElevation
+                    onClick={() => changeFilter(todolistsID, 'All',)}
+                >All</Button>
+                <Button
+                    sx={{ml: '12px', mr: '12px'}}
+                    variant="contained"
+                    color={filter === 'Active' ? "secondary" : "primary"}
+                    size="small"
+                    disableElevation
+                    onClick={() => changeFilter(todolistsID, 'Active')}
+                >Active</Button>
+                <Button
+                    variant="contained"
+                    color={filter === 'Completed' ? "secondary" : "primary"}
+                    size="small"
+                    disableElevation
+                    onClick={() => changeFilter(todolistsID, 'Completed')}
+                >Completed</Button>
             </div>
         </div>
     )
 }
-
-export default TodoList;
