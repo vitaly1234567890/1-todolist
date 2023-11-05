@@ -23,7 +23,7 @@ import DarkModeIcon from '@mui/icons-material/DarkMode';
 
 
 export type FilterValuesType = 'All' | 'Active' | 'Completed'
-type TodolistsType = {
+export type TodolistsType = {
     id: string
     title: string
     filter: FilterValuesType
