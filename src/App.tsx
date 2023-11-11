@@ -29,7 +29,7 @@ export type TodolistsType = {
     filter: FilterValuesType
 }
 
-type TaskStateType = {
+export type TaskStateType = {
     [key: string]: Array<TaskType>
 }
 
@@ -104,8 +104,6 @@ function App() {
             todolist.title = newTitle
             setTodolists([...todolists])
         }
-
-
     }
 
     function addTodoList(title: string) {
