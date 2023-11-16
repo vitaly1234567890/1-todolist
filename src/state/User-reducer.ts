@@ -26,8 +26,6 @@ export const UserReducer = (state: StateType, action: ActionType): StateType => 
             return {
                 ...state, name: action.newName
             }
-            // state.childrenCount = state.childrenCount + 1
-            // return state
         default:
             throw new Error('I don\'t understand this type')
     }
