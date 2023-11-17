@@ -80,8 +80,6 @@ export const tasksReducer = (state = initialState, action: ActionsType): TaskSta
             // const {[action.id]: [], ...rest} = state
             // return rest
         }
-
-
         default:
             return state
     }

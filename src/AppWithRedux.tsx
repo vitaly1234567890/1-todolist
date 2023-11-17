@@ -1,4 +1,4 @@
-import React, {useReducer, useState} from 'react';
+import React, {useState} from 'react';
 import './App.css';
 import {TodoList, TaskType} from "./TodoList";
 import {AddItemForm} from "./AddItemForm";
@@ -25,9 +25,8 @@ import {
     changeTodolistFilterAC,
     changeTodolistTitleAC,
     removeTodolistAC,
-    TodolistsReducer
 } from "./state/todolists-reducer";
-import {addTaskAC, changeTaskStatusAC, changeTaskTitleAC, removeTaskAC, tasksReducer} from "./state/tasks-reducer";
+import {addTaskAC, changeTaskStatusAC, changeTaskTitleAC, removeTaskAC} from "./state/tasks-reducer";
 import {useDispatch, useSelector} from "react-redux";
 import {AppRootStateType} from "./state/store";
 
@@ -74,8 +73,7 @@ function AppWithRedux() {
     }
 
     const changeFilter = (todolistsID: string, nextFilterValue: FilterValuesType) => {
-        let action = changeTodolistFilterAC(todolistsID, nextFilterValue)
-        dispatch(action)
+        dispatch(changeTodolistFilterAC(todolistsID, nextFilterValue))
     }
 
     const removeTodoList = (todolistsID: string) => {
@@ -92,7 +90,7 @@ function AppWithRedux() {
         dispatch(action)
     }
 
-    const theme = createTheme({
+    const themes = createTheme({
         palette: {
             primary: teal,
             secondary: amber,
@@ -102,7 +100,7 @@ function AppWithRedux() {
 
     return (
         <div className="App">
-            <ThemeProvider theme={theme}>
+            <ThemeProvider theme={themes}>
                 <CssBaseline/>
                 <AppBar position="static">
                     <Toolbar style={{justifyContent: "space-between"}}>

@@ -1,6 +1,6 @@
 import React, {useReducer, useState} from 'react';
 import './App.css';
-import {TodoList, TaskType} from "./TodoList";
+import {TodoList} from "./TodoList";
 import {AddItemForm} from "./AddItemForm";
 import {
     AppBar, Box,
@@ -31,15 +31,6 @@ import {addTaskAC, changeTaskStatusAC, changeTaskTitleAC, removeTaskAC, tasksRed
 
 
 export type FilterValuesType = 'All' | 'Active' | 'Completed'
-export type TodolistsType = {
-    id: string
-    title: string
-    filter: FilterValuesType
-}
-
-export type TaskStateType = {
-    [key: string]: Array<TaskType>
-}
 
 function AppWithReducer() {
 
@@ -86,8 +77,7 @@ function AppWithReducer() {
     }
 
     const removeTask = (todolistsID: string, taskId: string) => {
-        let action = removeTaskAC(taskId, todolistsID)
-        dispatchToTasks(action)
+        dispatchToTasks(removeTaskAC(taskId, todolistsID))
     }
 
     const changeFilter = (todolistsID: string, nextFilterValue: FilterValuesType) => {
@@ -189,5 +179,4 @@ function AppWithReducer() {
         </div>
     );
 }
-
 export default AppWithReducer;

@@ -1,4 +1,4 @@
-import {FilterValuesType, TaskStateType, TodolistsType} from "../App";
+import {FilterValuesType, TodolistsType} from "../App";
 import {v1} from "uuid";
 
 type ActionsType =
