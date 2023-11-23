@@ -1,4 +1,4 @@
-import React, {ChangeEvent, FC} from 'react';
+import React, {ChangeEvent, FC, memo, useCallback} from 'react';
 import {FilterValuesType} from "./App";
 import {AddItemForm} from "./AddItemForm";
 import {EditableSpan} from "./EditableSpan";
@@ -28,7 +28,8 @@ export type TaskType = {
     isDone: boolean
 }
 
-export const TodoList: FC<TodoListPropsType> = (
+export const TodoList: FC<TodoListPropsType> = memo ((
+
     {
         title,
         tasks,
@@ -42,8 +43,17 @@ export const TodoList: FC<TodoListPropsType> = (
         changeTaskTitle,
         changeTodoListTitle
     }) => {
+    console.log("Todolist")
 
-    const listItems: Array<JSX.Element> = tasks.map(t => {
+    let task = tasks
+    if (filter === "Active") {
+        task = tasks.filter(t => !t.isDone);
+    }
+    if (filter === "Completed") {
+        task = tasks.filter(t => t.isDone)
+    }
+
+    const listItems: Array<JSX.Element> = task.map(t => {
         const onClickRemoveTaskHandler = () => {
             removeTask(todolistsID, t.id)
         }
@@ -60,10 +70,11 @@ export const TodoList: FC<TodoListPropsType> = (
         return (
             <Paper sx={{m: "10px"}}
                    elevation={5}
+                   key={t.id}
             >
                 <ListItem
                     sx={{p: "0"}}
-                    key={t.id}>
+                    >
                     <Checkbox
                         onChange={onChangeTaskStatusHandler}
                         checked={t.isDone}
@@ -85,17 +96,17 @@ export const TodoList: FC<TodoListPropsType> = (
         ? <List>{listItems}</List>
         : <span>Your tasklist is empty</span>
 
-    const removeTodoListHandler = () => {
+    const removeTodoListHandler = useCallback (() => {
         removeTodoList(todolistsID)
-    }
+    }, [todolistsID, removeTodoList])
 
-    const changeTodoListTitled = (newTitle: string) => {
+    const changeTodoListTitled = useCallback ((newTitle: string) => {
         changeTodoListTitle(todolistsID, newTitle)
-    }
+    }, [todolistsID, changeTodoListTitle])
 
-    const addedTask = (title: string) => {
+    const addedTask = useCallback ((title: string) => {
         addTask(todolistsID, title)
-    }
+    }, [todolistsID, addTask])
 
     return (
         <div className='todolist'>
@@ -136,4 +147,4 @@ export const TodoList: FC<TodoListPropsType> = (
             </div>
         </div>
     )
-}
+})
