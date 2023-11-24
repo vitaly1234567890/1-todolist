@@ -10,20 +10,20 @@ type TaskPropsType = {
     removeTask: (todolistsID: string, taskId: string) => void
     changeTaskStatus: (todolistsID: string, taskId: string, newIsDoneValue: boolean) => void
     changeTaskTitle: (todolistsID: string, taskId: string, value: string) => void
-    todolistsID: string
+    todolistsId: string
 }
 export const Task = memo((props: TaskPropsType) => {
     const onClickRemoveTaskHandler = () => {
-        props.removeTask(props.todolistsID, props.tasks.id)
+        props.removeTask(props.todolistsId, props.tasks.id)
     }
 
     const onChangeTaskStatusHandler =
         (e: ChangeEvent<HTMLInputElement>) => {
-            props.changeTaskStatus(props.todolistsID, props.tasks.id, e.currentTarget.checked)
+            props.changeTaskStatus(props.todolistsId, props.tasks.id, e.currentTarget.checked)
         }
 
     const onChangeTaskTitleHandler = (newValue: string) => {
-        props.changeTaskTitle(props.todolistsID, props.tasks.id, newValue)
+        props.changeTaskTitle(props.todolistsId, props.tasks.id, newValue)
     }
 
     return (
