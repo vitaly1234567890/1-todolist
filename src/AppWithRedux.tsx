@@ -30,7 +30,6 @@ import {addTaskAC, changeTaskStatusAC, changeTaskTitleAC, removeTaskAC} from "./
 import {useDispatch, useSelector} from "react-redux";
 import {AppRootStateType} from "./state/store";
 
-
 export type FilterValuesType = 'All' | 'Active' | 'Completed'
 export type TodolistsType = {
     id: string
@@ -43,7 +42,6 @@ export type TaskStateType = {
 }
 
 function AppWithRedux() {
-
     let todolists = useSelector<AppRootStateType, Array<TodolistsType>>(state => state.todolists)
 
     let tasks = useSelector<AppRootStateType, TaskStateType>(state => state.tasks)
@@ -52,40 +50,40 @@ function AppWithRedux() {
 
     const [isDark, setISDark] = useState(false)
 
-    const addTask = useCallback ((todolistID: string, title: string) => {
+    const addTask = useCallback((todolistID: string, title: string) => {
         let action = addTaskAC(title, todolistID)
         dispatch(action)
     }, [dispatch])
 
-    const changeTaskStatus =useCallback ((todolistsID: string, taskId: string, newIsDoneValue: boolean) => {
+    const changeTaskStatus = useCallback((todolistsID: string, taskId: string, newIsDoneValue: boolean) => {
         let action = changeTaskStatusAC(taskId, newIsDoneValue, todolistsID)
         dispatch(action)
     }, [dispatch])
 
-    const changeTaskTitle = useCallback ((todolistsID: string, taskId: string, value: string) => {
+    const changeTaskTitle = useCallback((todolistsID: string, taskId: string, value: string) => {
         let action = changeTaskTitleAC(taskId, value, todolistsID)
         dispatch(action)
     }, [dispatch])
 
-    const removeTask = useCallback ((todolistsID: string, taskId: string) => {
+    const removeTask = useCallback((todolistsID: string, taskId: string) => {
         let action = removeTaskAC(taskId, todolistsID)
         dispatch(action)
     }, [dispatch])
 
-    const changeFilter = useCallback ((todolistsID: string, nextFilterValue: FilterValuesType) => {
+    const changeFilter = useCallback((todolistsID: string, nextFilterValue: FilterValuesType) => {
         dispatch(changeTodolistFilterAC(todolistsID, nextFilterValue))
     }, [dispatch])
 
-    const removeTodoList = useCallback ((todolistsID: string) => {
+    const removeTodoList = useCallback((todolistsID: string) => {
         let action = removeTodolistAC(todolistsID)
         dispatch(action)
     }, [dispatch])
 
-    const changeTodoListTitle = useCallback ((todolistsID: string, newTitle: string) => {
+    const changeTodoListTitle = useCallback((todolistsID: string, newTitle: string) => {
         dispatch(changeTodolistTitleAC(todolistsID, newTitle))
     }, [dispatch])
 
-    const addTodoList = useCallback ((title: string) => {
+    const addTodoList = useCallback((title: string) => {
         console.log("addTodoList")
         let action = addTodolistAC(title)
         dispatch(action)
@@ -133,7 +131,7 @@ function AppWithRedux() {
                     <Grid container sx={{p: "15px 0", justifyContent: "center"}}>
                         <AddItemForm addItem={addTodoList}/>
                     </Grid>
-                    <Grid container spacing={4} >
+                    <Grid container spacing={4}>
                         {todolists.map((el) => {
 
                             return (

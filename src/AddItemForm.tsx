@@ -7,7 +7,6 @@ type AddItemFormPropsType = {
 }
 
 export const AddItemForm = memo ((props: AddItemFormPropsType) => {
-    console.log("AddItemForm")
     const [newTaskTitle, setNewTaskTitle] = useState("")
     const [inputError, setInputError] = useState(false)
     const onChangeHandler = (e: ChangeEvent<HTMLInputElement>) => {

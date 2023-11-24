@@ -27,5 +27,4 @@ export const EditableSpan = memo ((props: EditableSpanPropsType) => {
     return editMode
         ? <TextField value={title} onBlur={ViewMode} autoFocus onChange={onChangeTitleTask}/>
         : <span onDoubleClick={ActiveMode}>{props.title}</span>
-
 })
