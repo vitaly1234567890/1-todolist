@@ -55,7 +55,7 @@ export const TodoList: FC<TodoListPropsType> = memo((
               changeTaskTitle={changeTaskTitle}
               changeTaskStatus={changeTaskStatus}
               removeTask={removeTask}
-              todolistsID={todolistsID} />
+              todolistsId={todolistsID} />
     )
 
     const tasksList: JSX.Element = tasks.length

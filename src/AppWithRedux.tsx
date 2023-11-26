@@ -84,7 +84,6 @@ function AppWithRedux() {
     }, [dispatch])
 
     const addTodoList = useCallback((title: string) => {
-        console.log("addTodoList")
         let action = addTodolistAC(title)
         dispatch(action)
     }, [dispatch])
