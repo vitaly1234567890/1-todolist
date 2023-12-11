@@ -1,6 +1,6 @@
 import React, {useCallback, useState} from 'react';
 import './App.css';
-import {TodoList, TaskType} from "./TodoList";
+import {TodoList} from "./TodoList";
 import {AddItemForm} from "./AddItemForm";
 import {
     AppBar, Box,
@@ -23,26 +23,20 @@ import DarkModeIcon from '@mui/icons-material/DarkMode';
 import {
     addTodolistAC,
     changeTodolistFilterAC,
-    changeTodolistTitleAC,
-    removeTodolistAC,
+    changeTodolistTitleAC, FilterValuesType,
+    removeTodolistAC, TodolistDomainType,
 } from "./state/todolists-reducer";
 import {addTaskAC, changeTaskStatusAC, changeTaskTitleAC, removeTaskAC} from "./state/tasks-reducer";
 import {useDispatch, useSelector} from "react-redux";
 import {AppRootStateType} from "./state/store";
-
-export type FilterValuesType = 'All' | 'Active' | 'Completed'
-export type TodolistsType = {
-    id: string
-    title: string
-    filter: FilterValuesType
-}
+import {TaskStatuses, TaskType} from "./api/todolist-api";
 
 export type TaskStateType = {
     [key: string]: Array<TaskType>
 }
 
 function AppWithRedux() {
-    let todolists = useSelector<AppRootStateType, Array<TodolistsType>>(state => state.todolists)
+    let todolists = useSelector<AppRootStateType, Array<TodolistDomainType>>(state => state.todolists)
 
     let tasks = useSelector<AppRootStateType, TaskStateType>(state => state.tasks)
 
@@ -55,8 +49,8 @@ function AppWithRedux() {
         dispatch(action)
     }, [dispatch])
 
-    const changeTaskStatus = useCallback((todolistsID: string, taskId: string, newIsDoneValue: boolean) => {
-        let action = changeTaskStatusAC(taskId, newIsDoneValue, todolistsID)
+    const changeTaskStatus = useCallback((todolistsID: string, taskId: string, status: TaskStatuses) => {
+        let action = changeTaskStatusAC(taskId, status, todolistsID)
         dispatch(action)
     }, [dispatch])
 

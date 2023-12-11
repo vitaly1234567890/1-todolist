@@ -23,14 +23,12 @@ import DarkModeIcon from '@mui/icons-material/DarkMode';
 import {
     addTodolistAC,
     changeTodolistFilterAC,
-    changeTodolistTitleAC,
+    changeTodolistTitleAC, FilterValuesType,
     removeTodolistAC,
     TodolistsReducer
 } from "./state/todolists-reducer";
 import {addTaskAC, changeTaskStatusAC, changeTaskTitleAC, removeTaskAC, tasksReducer} from "./state/tasks-reducer";
-
-
-export type FilterValuesType = 'All' | 'Active' | 'Completed'
+import {TaskPriorities, TaskStatuses} from "./api/todolist-api";
 
 function AppWithReducer() {
 
@@ -38,24 +36,30 @@ function AppWithReducer() {
     let todolistID2 = crypto.randomUUID();
 
     let [todolists, dispatchToTodolists] = useReducer(TodolistsReducer, [
-        {id: todolistID1, title: 'What to learn', filter: 'All'},
-        {id: todolistID2, title: 'What to buy', filter: 'All'},
+        {id: todolistID1, title: 'What to learn', filter: 'All', addedDate: "", order: 0},
+        {id: todolistID2, title: 'What to buy', filter: 'All', addedDate: "", order: 0},
     ])
 
     let [tasks, dispatchToTasks] = useReducer(tasksReducer, {
         [todolistID1]: [
-            {id: crypto.randomUUID(), title: "HTML&CSS", isDone: true},
-            {id: crypto.randomUUID(), title: "JS", isDone: true},
-            {id: crypto.randomUUID(), title: "ReactJS", isDone: false},
-            {id: crypto.randomUUID(), title: "Rest API", isDone: false},
-            {id: crypto.randomUUID(), title: "GraphQL", isDone: false},
+            {
+                id: crypto.randomUUID(), title: "HTML&CSS", status: TaskStatuses.Complited, todoListId: todolistID1,
+                startDate: "", deadline: '', addedDate: '', order: 0, priority: TaskPriorities.Low, description: '', completed: true
+            },
+            {
+                id: crypto.randomUUID(), title: "JS", status: TaskStatuses.Complited, todoListId: todolistID1,
+                startDate: "", deadline: '', addedDate: '', order: 0, priority: TaskPriorities.Low, description: '', completed: true
+            }
         ],
         [todolistID2]: [
-            {id: crypto.randomUUID(), title: "HTML&CSS2", isDone: true},
-            {id: crypto.randomUUID(), title: "JS2", isDone: true},
-            {id: crypto.randomUUID(), title: "ReactJS2", isDone: false},
-            {id: crypto.randomUUID(), title: "Rest API2", isDone: false},
-            {id: crypto.randomUUID(), title: "GraphQL2", isDone: false},
+            {
+                id: crypto.randomUUID(), title: "HTML&CSS2", status: TaskStatuses.Complited, todoListId: todolistID2,
+                startDate: "", deadline: '', addedDate: '', order: 0, priority: TaskPriorities.Low, description: '', completed: true
+            },
+            {
+                id: crypto.randomUUID(), title: "JS2", status: TaskStatuses.Complited, todoListId: todolistID2,
+                startDate: "", deadline: '', addedDate: '', order: 0, priority: TaskPriorities.Low, description: '', completed: true
+            }
         ]
     });
 
@@ -66,8 +70,8 @@ function AppWithReducer() {
         dispatchToTasks(action)
     }
 
-    const changeTaskStatus = (todolistsID: string, taskId: string, newIsDoneValue: boolean) => {
-        let action = changeTaskStatusAC(taskId, newIsDoneValue, todolistsID)
+    const changeTaskStatus = (todolistsID: string, taskId: string, status: TaskStatuses) => {
+        let action = changeTaskStatusAC(taskId, status, todolistsID)
         dispatchToTasks(action)
     }
 
@@ -147,10 +151,10 @@ function AppWithReducer() {
                         {todolists.map((el) => {
                             let taskForTodolist = tasks[el.id];
                             if (el.filter === "Active") {
-                                taskForTodolist = tasks[el.id].filter(t => !t.isDone);
+                                taskForTodolist = tasks[el.id].filter(t =>  t.status === TaskStatuses.New);
                             }
                             if (el.filter === "Completed") {
-                                taskForTodolist = tasks[el.id].filter(t => t.isDone)
+                                taskForTodolist = tasks[el.id].filter(t => t.status === TaskStatuses.Complited)
                             }
                             return (
                                 <Grid item key={el.id}>

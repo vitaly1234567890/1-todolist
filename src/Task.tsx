@@ -3,12 +3,13 @@ import {Checkbox, IconButton, ListItem, Paper} from "@mui/material";
 import {EditableSpan} from "./EditableSpan";
 import ListItemSecondaryAction from "@mui/material/ListItemSecondaryAction";
 import HighlightOffIcon from "@mui/icons-material/HighlightOff";
-import {TaskType} from "./TodoList";
+import {TaskStatuses, TaskType} from "./api/todolist-api";
+
 
 type TaskPropsType = {
     tasks: TaskType
     removeTask: (todolistsID: string, taskId: string) => void
-    changeTaskStatus: (todolistsID: string, taskId: string, newIsDoneValue: boolean) => void
+    changeTaskStatus: (todolistsID: string, taskId: string, status: TaskStatuses) => void
     changeTaskTitle: (todolistsID: string, taskId: string, value: string) => void
     todolistsId: string
 }
@@ -19,7 +20,7 @@ export const Task = memo((props: TaskPropsType) => {
 
     const onChangeTaskStatusHandler =
         (e: ChangeEvent<HTMLInputElement>) => {
-            props.changeTaskStatus(props.todolistsId, props.tasks.id, e.currentTarget.checked)
+            props.changeTaskStatus(props.todolistsId, props.tasks.id, e.currentTarget.checked ? TaskStatuses.Complited : TaskStatuses.New)
         }
 
     const onChangeTaskTitleHandler = (newValue: string) => {
@@ -35,9 +36,9 @@ export const Task = memo((props: TaskPropsType) => {
             >
                 <Checkbox
                     onChange={onChangeTaskStatusHandler}
-                    checked={props.tasks.isDone}
+                    checked={props.tasks.status === TaskStatuses.Complited}
                 />
-                <span className={props.tasks.isDone ? "task-done" : "task"}>
+                <span className={props.tasks.status === TaskStatuses.Complited ? "task-done" : "task"}>
                     <EditableSpan title={props.tasks.title} onChange={onChangeTaskTitleHandler}/>
                 </span>
                 <ListItemSecondaryAction>

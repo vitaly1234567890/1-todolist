@@ -13,9 +13,7 @@ type ActionType = {
 export const UserReducer = (state: StateType, action: ActionType): StateType => {
     switch (action.type) {
         case 'INCREMENT-AGE':
-            let newState = {...state}
-            newState.age = state.age + 1
-            return state
+            return {...state, age: state.age + 1}
         case 'INCREMENT-CHILDREN-COUNT':
             return {
                 ...state,
