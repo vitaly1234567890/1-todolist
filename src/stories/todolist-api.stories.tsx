@@ -31,7 +31,7 @@ export const CreateTodolist = () => {
 export const DeleteTodolist = () => {
     const [state, setState] = useState<ResponseType | null>(null)
     useEffect(() => {
-        todolistAPI.deleteTodolist("ee0a508b-7fec-4a9c-8c51-50653fd56898")
+        todolistAPI.deleteTodolist("3c52bf28-0eec-4e01-a238-003e000cac09")
             .then((res) => {
                 setState(res.data)
             })
@@ -58,7 +58,7 @@ export const GetTask = () => {
     const getTask = () => {
         todolistAPI.task(todolistId)
             .then((res) => {
-                setState(res.data)
+                setState(res.data.items)
             })
     }
 
@@ -74,7 +74,7 @@ export const GetTask = () => {
 }
 
 export const CreateTask = () => {
-    const [state, setState] = useState<ResponseType<TaskType> | null>(null)
+    const [state, setState] = useState<ResponseType<{item:TaskType}> | null>(null)
     const [taskTitle, setTaskTitle] = useState<string>("")
     const [todolistId, setTodolistId] = useState<string>("")
     const createTask = () => {

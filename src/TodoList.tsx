@@ -1,4 +1,4 @@
-import React, {FC, memo, useCallback} from 'react';
+import React, {FC, memo, useCallback, useEffect} from 'react';
 import {AddItemForm} from "./AddItemForm";
 import {EditableSpan} from "./EditableSpan";
 import {Button, IconButton, List, Paper, Typography} from "@mui/material";
@@ -6,6 +6,8 @@ import DeleteForeverIcon from '@mui/icons-material/DeleteForever';
 import Task from "./Task";
 import {TaskStatuses, TaskType} from "./api/todolist-api";
 import {FilterValuesType} from "./state/todolists-reducer";
+import {useAppDispatch} from "./state/store";
+import {setTasksTC} from "./state/tasks-reducer";
 
 type TodoListPropsType = {
     title: string
@@ -43,6 +45,12 @@ export const TodoList: FC<TodoListPropsType> = memo((
     if (filter === "Completed") {
         task = tasks.filter(t => t.status === TaskStatuses.Complited)
     }
+
+    const dispatch = useAppDispatch()
+
+    useEffect(() => {
+        dispatch(setTasksTC(todolistsID))
+    }, []);
 
     const listItems: Array<JSX.Element> = task.map(t =>
         <Task key={t.id}

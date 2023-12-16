@@ -52,13 +52,19 @@ export type TaskType = {
             addedDate: string
 }
 
-type UpdateTaskModelType = {
+export type UpdateTaskModelType = {
     title: string
     description: string
     status: number
-    priority: number
+    priority: TaskPriorities
     startDate: string
     deadline: string
+}
+
+type GetTasksResponse = {
+    error: string | null
+    totalCount: number
+    items: TaskType[]
 }
 
 export const todolistAPI = {
@@ -69,7 +75,7 @@ export const todolistAPI = {
     },
     postTodolist(title: string) {
         const promise =
-            instanse.post<ResponseType<{ item: TodolistType }>>('/todo-lists', {title: 'New Todo'})
+            instanse.post<ResponseType<{ item: TodolistType }>>('/todo-lists', {title: title})
         return promise
     },
     deleteTodolist(todolistId: string) {
@@ -85,11 +91,11 @@ export const todolistAPI = {
     },
 
     task(todolistId: string) {
-        return instanse.get<TaskType[]>(`/todo-lists/${todolistId}/tasks`)
+        return instanse.get<GetTasksResponse>(`/todo-lists/${todolistId}/tasks`)
     },
     postTask(todolistId: string, title: string) {
         const promise =
-            instanse.post<ResponseType<TaskType>>(`/todo-lists/${todolistId}/tasks`,
+            instanse.post<ResponseType<{item:TaskType}>>(`/todo-lists/${todolistId}/tasks`,
                 {title}
             )
         return promise
@@ -97,6 +103,7 @@ export const todolistAPI = {
     deleteTask(todolistId: string, taskId: string) {
         return instanse.delete<ResponseType>(`/todo-lists/${todolistId}/tasks/${taskId}`)
     },
+
     updateTask(todolistId: string, taskId: string, model: UpdateTaskModelType){
         return instanse.put<ResponseType<TaskType>>(`/todo-lists/${todolistId}/tasks/${taskId}`,model)
     }
