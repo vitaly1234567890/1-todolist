@@ -1,9 +1,9 @@
 import React, {ChangeEvent, memo} from 'react';
 import {Checkbox, IconButton, ListItem, Paper} from "@mui/material";
-import {EditableSpan} from "./EditableSpan";
+import {EditableSpan} from "../../../../components/editableSpan/EditableSpan";
 import ListItemSecondaryAction from "@mui/material/ListItemSecondaryAction";
 import HighlightOffIcon from "@mui/icons-material/HighlightOff";
-import {TaskStatuses, TaskType} from "./api/todolist-api";
+import {TaskStatuses, TaskType} from "../../../../api/todolist-api";
 
 
 type TaskPropsType = {

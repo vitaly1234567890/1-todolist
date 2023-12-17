@@ -1,7 +1,7 @@
 import React, {useState} from 'react';
-import './App.css';
-import {TodoList} from "./TodoList";
-import {AddItemForm} from "./AddItemForm";
+import '../app/App.css';
+import {TodoList} from "../features/todolistsList/todolist/TodoList";
+import {AddItemForm} from "../components/addItemForm/AddItemForm";
 import {
     AppBar,
     Box,
@@ -22,8 +22,8 @@ import LogoutIcon from '@mui/icons-material/Logout';
 import {amber, teal} from '@mui/material/colors';
 import LightModeIcon from '@mui/icons-material/LightMode';
 import DarkModeIcon from '@mui/icons-material/DarkMode';
-import {TaskPriorities, TaskStatuses, TaskType} from "./api/todolist-api";
-import {FilterValuesType, TodolistDomainType} from "./state/todolists-reducer";
+import {TaskPriorities, TaskStatuses, TaskType} from "../api/todolist-api";
+import {FilterValuesType, TodolistDomainType} from "../features/todolistsList/todolists-reducer";
 
 export type TaskStateType = {
     [key: string]: Array<TaskType>
