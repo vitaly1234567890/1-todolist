@@ -7,7 +7,7 @@ import {
     Container,
     createTheme,
     CssBaseline,
-    IconButton,
+    IconButton, LinearProgress,
     Switch,
     ThemeProvider,
     Toolbar,
@@ -20,12 +20,21 @@ import LightModeIcon from '@mui/icons-material/LightMode';
 import DarkModeIcon from '@mui/icons-material/DarkMode';
 import {TaskType} from "../api/todolist-api";
 import {TodolistsList} from "../features/todolistsList/TodolistsList";
+import {useSelector} from "react-redux";
+import {AppRootStateType} from "./store";
+import {ErrorSnackbar} from "../components/AppSnackbar/AppSnackbar";
 
 export type TaskStateType = {
     [key: string]: Array<TaskType>
 }
 
-function AppWithRedux() {
+type PropsType = {
+    demo?: boolean
+}
+
+function AppWithRedux({demo = false}: PropsType) {
+
+    const status = useSelector<AppRootStateType>(state => state.app.status)
 
     const [isDark, setISDark] = useState(false)
 
@@ -39,6 +48,7 @@ function AppWithRedux() {
 
     return (
         <div className="App">
+            <ErrorSnackbar/>
             <ThemeProvider theme={themes}>
                 <CssBaseline/>
                 <AppBar position="static">
@@ -66,10 +76,12 @@ function AppWithRedux() {
                             </Button>
                         </Box>
                     </Toolbar>
+                    {status === 'loading' && <LinearProgress />}
                 </AppBar>
                 <Container>
-                    <TodolistsList/>
+                    <TodolistsList demo={demo}/>
                 </Container>
+
             </ThemeProvider>
         </div>
     );

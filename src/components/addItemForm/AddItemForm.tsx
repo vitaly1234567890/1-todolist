@@ -4,9 +4,10 @@ import PostAddIcon from '@mui/icons-material/PostAdd';
 
 type AddItemFormPropsType = {
     addItem: (title: string) => void
+    disabled?: boolean
 }
 
-export const AddItemForm = memo ((props: AddItemFormPropsType) => {
+export const AddItemForm = memo (({addItem, disabled = false}: AddItemFormPropsType) => {
     const [newTaskTitle, setNewTaskTitle] = useState("")
     const [inputError, setInputError] = useState(false)
     const onChangeHandler = (e: ChangeEvent<HTMLInputElement>) => {
@@ -21,7 +22,7 @@ export const AddItemForm = memo ((props: AddItemFormPropsType) => {
     const onClickAddTask = () => {
         const trimmedTitle = newTaskTitle.trim()
         if (trimmedTitle) {
-            props.addItem(trimmedTitle)
+            addItem(trimmedTitle)
         } else {
             setInputError(true)
         }
@@ -30,15 +31,13 @@ export const AddItemForm = memo ((props: AddItemFormPropsType) => {
 
     const userMessage = inputError
         ? <span style={{color: "red"}}> Your title is too empty</span>
-        : newTaskTitle.length < 15
-            ? <span>Enter new title</span>
-            : <span style={{color: "red"}}> Your title is too long</span>
+            : <span>Enter new title</span>
 
-
-    const isAddBtnDisabled = !newTaskTitle || newTaskTitle.length >= 15
+    const isAddBtnDisabled = !newTaskTitle || disabled
 
     return <div>
         <TextField
+            disabled={disabled}
             size='small'
             value={newTaskTitle}
             onChange={onChangeHandler}

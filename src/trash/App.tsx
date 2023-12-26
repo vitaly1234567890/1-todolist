@@ -34,8 +34,8 @@ function App() {
     let todolistID2 = crypto.randomUUID();
 
     let [todolists, setTodolists] = useState<Array<TodolistDomainType>>([
-        {id: todolistID1, title: 'What to learn', filter: 'All', addedDate: "", order: 0},
-        {id: todolistID2, title: 'What to buy', filter: 'All', addedDate: "", order: 0},
+        {id: todolistID1, title: 'What to learn', filter: 'All', addedDate: "", order: 0, entityStatus: "idle"},
+        {id: todolistID2, title: 'What to buy', filter: 'All', addedDate: "", order: 0, entityStatus: "idle"},
     ])
 
     let [tasks, setTasks] = useState<TaskStateType>({
@@ -109,7 +109,7 @@ function App() {
     }
 
     function addTodoList(title: string) {
-        let newTodo: TodolistDomainType = {id: crypto.randomUUID(), title: title, filter: 'All', addedDate: '', order: 0}
+        let newTodo: TodolistDomainType = {id: crypto.randomUUID(), title: title, filter: 'All', addedDate: '', order: 0, entityStatus: "idle"}
         setTodolists([newTodo, ...todolists])
         setTasks({...tasks, [newTodo.id]: []})
     }
@@ -169,14 +169,12 @@ function App() {
                                 <Grid item key={el.id}>
                                     <Paper sx={{p: "15px"}}>
                                         <TodoList
-                                            todolistsID={el.id}
-                                            title={el.title}
+                                            todolist={el}
                                             tasks={taskForTodolist}
                                             removeTask={removeTask}
                                             changeFilter={changeFilter}
                                             addTask={addTask}
                                             changeTaskStatus={changeTaskStatus}
-                                            filter={el.filter}
                                             removeTodoList={removeTodoList}
                                             changeTaskTitle={changeTaskTitle}
                                             changeTodoListTitle={changeTodoListTitle}

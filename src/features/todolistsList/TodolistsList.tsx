@@ -17,8 +17,10 @@ import {AddItemForm} from "../../components/addItemForm/AddItemForm";
 import {TodoList} from "./todolist/TodoList";
 import {TaskStateType} from "../../app/AppWithRedux";
 
-type TodolistsListPropsType = {}
-export const TodolistsList: React.FC<TodolistsListPropsType> = (props) => {
+type TodolistsListPropsType = {
+    demo?: boolean
+}
+export const TodolistsList: React.FC<TodolistsListPropsType> = ({demo = false}) => {
     let todolists = useSelector<AppRootStateType, Array<TodolistDomainType>>(state => state.todolists)
 
     let tasks = useSelector<AppRootStateType, TaskStateType>(state => state.tasks)
@@ -58,6 +60,9 @@ export const TodolistsList: React.FC<TodolistsListPropsType> = (props) => {
     }, [dispatch])
 
     useEffect(() => {
+        if(demo) {
+            return
+        }
         dispatch(getTodolistsTC())
     }, []);
 
@@ -73,17 +78,16 @@ export const TodolistsList: React.FC<TodolistsListPropsType> = (props) => {
                         <Grid item key={el.id}>
                             <Paper sx={{p: "15px"}}>
                                 <TodoList
-                                    todolistsID={el.id}
-                                    title={el.title}
+                                    todolist={el}
                                     tasks={tasks[el.id]}
                                     removeTask={removeTask}
                                     changeFilter={changeFilter}
                                     addTask={addTask}
                                     changeTaskStatus={changeTaskStatus}
-                                    filter={el.filter}
                                     removeTodoList={removeTodoList}
                                     changeTaskTitle={changeTaskTitle}
                                     changeTodoListTitle={changeTodoListTitle}
+                                    demo={demo}
                                 />
                             </Paper>
                         </Grid>

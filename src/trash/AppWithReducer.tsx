@@ -37,8 +37,8 @@ function AppWithReducer() {
     let todolistID2 = crypto.randomUUID();
 
     let [todolists, dispatchToTodolists] = useReducer(TodolistsReducer, [
-        {id: todolistID1, title: 'What to learn', filter: 'All', addedDate: "", order: 0},
-        {id: todolistID2, title: 'What to buy', filter: 'All', addedDate: "", order: 0},
+        {id: todolistID1, title: 'What to learn', filter: 'All', addedDate: "", order: 0, entityStatus: "idle"},
+        {id: todolistID2, title: 'What to buy', filter: 'All', addedDate: "", order: 0, entityStatus: "idle"},
     ])
 
     let [tasks, dispatchToTasks] = useReducer(tasksReducer, {
@@ -178,14 +178,12 @@ function AppWithReducer() {
                                 <Grid item key={el.id}>
                                     <Paper sx={{p: "15px"}}>
                                         <TodoList
-                                            todolistsID={el.id}
-                                            title={el.title}
+                                            todolist={el}
                                             tasks={taskForTodolist}
                                             removeTask={removeTask}
                                             changeFilter={changeFilter}
                                             addTask={addTask}
                                             changeTaskStatus={changeTaskStatus}
-                                            filter={el.filter}
                                             removeTodoList={removeTodoList}
                                             changeTaskTitle={changeTaskTitle}
                                             changeTodoListTitle={changeTodoListTitle}
