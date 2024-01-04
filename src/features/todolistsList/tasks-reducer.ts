@@ -6,7 +6,7 @@ import {
 import {TaskPriorities, TaskType, todolistAPI, UpdateTaskModelType} from "../../api/todolist-api";
 import {Dispatch} from "redux";
 import {AppRootStateType} from "../../app/store";
-import {setAppErrorAC, setErrorActiontype, setAppStatusAC, setStatusActiontype} from "../../app/app-reducer";
+import {setErrorActiontype, setAppStatusAC, setStatusActiontype} from "../../app/app-reducer";
 import {handleServerAppError, handleServerNetworkError} from "../../utils/error-utils";
 
 const initialState: TaskStateType = {}

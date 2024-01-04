@@ -1,9 +1,9 @@
-import React, {useState} from 'react';
+import React, {useEffect, useState} from 'react';
 import './App.css';
 import {
     AppBar,
     Box,
-    Button,
+    Button, CircularProgress,
     Container,
     createTheme,
     CssBaseline,
@@ -21,8 +21,12 @@ import DarkModeIcon from '@mui/icons-material/DarkMode';
 import {TaskType} from "../api/todolist-api";
 import {TodolistsList} from "../features/todolistsList/TodolistsList";
 import {useSelector} from "react-redux";
-import {AppRootStateType} from "./store";
+import {AppRootStateType, useAppDispatch} from "./store";
 import {ErrorSnackbar} from "../components/AppSnackbar/AppSnackbar";
+import {Login} from "../Login/Login";
+import {Navigate, Route, Routes} from "react-router-dom";
+import {log} from "util";
+import {logOutTC, meTC} from "../Login/auth-reducer";
 
 export type TaskStateType = {
     [key: string]: Array<TaskType>
@@ -35,6 +39,9 @@ type PropsType = {
 function AppWithRedux({demo = false}: PropsType) {
 
     const status = useSelector<AppRootStateType>(state => state.app.status)
+    const dispatch = useAppDispatch()
+    const isInitialized = useSelector<AppRootStateType>(state => state.app.isInitialized)
+    const isLoggedIn = useSelector<AppRootStateType>(state => state.auth.isLoggedIn)
 
     const [isDark, setISDark] = useState(false)
 
@@ -45,6 +52,22 @@ function AppWithRedux({demo = false}: PropsType) {
             mode: isDark ? 'dark' : "light"
         }
     })
+
+    const onClickHandler = () => {
+        dispatch(logOutTC())
+    }
+
+    useEffect(() => {
+        dispatch(meTC())
+    }, []);
+
+    if (!isInitialized) {
+        return (
+            <div style={{ position: 'fixed', top: '30%', textAlign: 'center', width: '100%' }}>
+                <CircularProgress />
+            </div>
+        )
+    }
 
     return (
         <div className="App">
@@ -71,17 +94,21 @@ function AppWithRedux({demo = false}: PropsType) {
                                 />
                                 <DarkModeIcon/>
                             </Box>
-                            <Button color="inherit" endIcon={<LogoutIcon/>}>
+                            {!!isLoggedIn && <Button color="inherit" endIcon={<LogoutIcon/>} onClick={onClickHandler}>
                                 Logout
-                            </Button>
+                            </Button>}
                         </Box>
                     </Toolbar>
-                    {status === 'loading' && <LinearProgress />}
+                    {status === 'loading' && <LinearProgress/>}
                 </AppBar>
                 <Container>
-                    <TodolistsList demo={demo}/>
+                    <Routes>
+                        <Route path={'/'} element={<TodolistsList demo={demo}/>}/>
+                        <Route path={'login'} element={<Login/>}/>
+                        <Route path={'404'} element={<h1 style={{textAlign: "center"}}>Page not found 404</h1>}/>
+                        <Route path={'*'} element={<Navigate to={'/404'}/>}/>
+                    </Routes>
                 </Container>
-
             </ThemeProvider>
         </div>
     );
