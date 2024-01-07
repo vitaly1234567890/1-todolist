@@ -44,14 +44,14 @@ export const TodoList: FC<TodoListPropsType> = memo((
         task = tasks.filter(t => t.status === TaskStatuses.Complited)
     }
 
-    const dispatch = useAppDispatch()
+    // const dispatch = useAppDispatch()
 
-    useEffect(() => {
-        if (demo) {
-            return
-        }
-        dispatch(setTasksTC(todolist.id))
-    }, []);
+    // useEffect(() => {
+    //     if (demo) {
+    //         return
+    //     }
+    //     dispatch(setTasksTC(todolist.id))
+    // }, []);
 
     const listItems: Array<JSX.Element> = task.map(t =>
         <Task key={t.id}
@@ -59,7 +59,8 @@ export const TodoList: FC<TodoListPropsType> = memo((
               changeTaskTitle={changeTaskTitle}
               changeTaskStatus={changeTaskStatus}
               removeTask={removeTask}
-              todolistsId={todolist.id} />
+              todolistsId={todolist.id}
+        />
     )
 
     const tasksList: JSX.Element = tasks.length

@@ -42,21 +42,22 @@ function App() {
         [todolistID1]: [
             {
                 id: crypto.randomUUID(), title: "HTML&CSS", status: TaskStatuses.Complited, todoListId: todolistID1,
-                startDate: "", deadline: '', addedDate: '', order: 0, priority: TaskPriorities.Low, description: '', completed: true
+                startDate: "", deadline: '', addedDate: '', order: 0, priority: TaskPriorities.Low, description: '', completed: true,
+                entityStatus: 'idle'
             },
             {
                 id: crypto.randomUUID(), title: "JS", status: TaskStatuses.Complited, todoListId: todolistID1,
-                startDate: "", deadline: '', addedDate: '', order: 0, priority: TaskPriorities.Low, description: '', completed: true
+                startDate: "", deadline: '', addedDate: '', order: 0, priority: TaskPriorities.Low, description: '', completed: true, entityStatus: 'idle'
             }
         ],
         [todolistID2]: [
             {
                 id: crypto.randomUUID(), title: "HTML&CSS2", status: TaskStatuses.Complited, todoListId: todolistID2,
-                startDate: "", deadline: '', addedDate: '', order: 0, priority: TaskPriorities.Low, description: '', completed: true
+                startDate: "", deadline: '', addedDate: '', order: 0, priority: TaskPriorities.Low, description: '', completed: true, entityStatus: 'idle'
             },
             {
                 id: crypto.randomUUID(), title: "JS2", status: TaskStatuses.Complited, todoListId: todolistID2,
-                startDate: "", deadline: '', addedDate: '', order: 0, priority: TaskPriorities.Low, description: '', completed: true
+                startDate: "", deadline: '', addedDate: '', order: 0, priority: TaskPriorities.Low, description: '', completed: true, entityStatus: 'idle'
             }
         ]
     });
@@ -68,7 +69,7 @@ function App() {
             id: crypto.randomUUID(),
             title: title,
             status: TaskStatuses.New, todoListId: todolistID,
-            startDate: "", deadline: '', addedDate: '', order: 0, priority: TaskPriorities.Low, description: '', completed: true
+            startDate: "", deadline: '', addedDate: '', order: 0, priority: TaskPriorities.Low, description: '', completed: true, entityStatus: 'idle'
         }
         setTasks({...tasks, [todolistID]: [...tasks[todolistID], newTask]})
     }

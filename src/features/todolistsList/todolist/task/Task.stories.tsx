@@ -29,7 +29,8 @@ const meta: Meta<typeof Task> = {
     },
     args: {
         tasks: {id: 'ddd', status: TaskStatuses.Complited, title: "JS", todoListId: 'todolistId1',
-            startDate: "", deadline: '', addedDate: '', order: 0, priority: TaskPriorities.Low, description: '', completed: true},
+            startDate: "", deadline: '', addedDate: '', order: 0, priority: TaskPriorities.Low, description: '', completed: true,
+            entityStatus: 'idle'},
         todolistsId: 'dssffds'
     }
 };
@@ -42,7 +43,8 @@ export const TaskIsDoneStory: Story = {};
 export const TaskIsNotDoneStory: Story = {
     args: {
         tasks: {id: 'ddd', status: TaskStatuses.New, title: "CSS & HTML", todoListId: 'todolistId1',
-            startDate: "", deadline: '', addedDate: '', order: 0, priority: TaskPriorities.Low, description: '', completed: true},
+            startDate: "", deadline: '', addedDate: '', order: 0, priority: TaskPriorities.Low, description: '', completed: true,
+            entityStatus: 'idle'},
         todolistsId: 'dssffds'
     }
 };

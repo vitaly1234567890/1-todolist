@@ -9,6 +9,7 @@ import {
 import {AuthAPI} from "../api/todolist-api";
 import {LoginType} from "./Login";
 import {handleServerAppError, handleServerNetworkError} from "../utils/error-utils";
+import {clearTodosAC, ClearTodosType} from "../features/todolistsList/todolists-reducer";
 
 type ErrorType = {
     message: string
@@ -71,6 +72,7 @@ export const logOutTC = () =>async (dispatch: Dispatch<ActionsType>) => {
         if(res.data.resultCode === 0){
             dispatch(setIsLoggedInAC(false))
             dispatch(setAppStatusAC('succeeded'))
+            dispatch(clearTodosAC())
         } else {
             handleServerAppError(res.data, dispatch)
         }
@@ -81,4 +83,4 @@ export const logOutTC = () =>async (dispatch: Dispatch<ActionsType>) => {
 
 
 // types
-type ActionsType = ReturnType<typeof setIsLoggedInAC> | setStatusActiontype | setErrorActiontype | setIsInitializedActiontype
+type ActionsType = ReturnType<typeof setIsLoggedInAC> | setStatusActiontype | setErrorActiontype | setIsInitializedActiontype | ClearTodosType

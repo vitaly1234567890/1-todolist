@@ -6,7 +6,7 @@ import {tasksReducer} from "../features/todolistsList/tasks-reducer";
 import {TodolistsReducer} from "../features/todolistsList/todolists-reducer";
 import {v1} from "uuid";
 import {TaskPriorities, TaskStatuses} from "../api/todolist-api";
-import {appReducer} from "./app-reducer";
+import {appReducer, RequestStatusType} from "./app-reducer";
 import {thunk} from "redux-thunk";
 
 const rootReducer = combineReducers({
@@ -33,7 +33,8 @@ const initialGlobalState: AppRootStateType = {
                 order: 0,
                 priority: TaskPriorities.Low,
                 description: '',
-                completed: true
+                completed: true,
+                entityStatus: 'idle'
             },
             {
                 id: v1(),
@@ -46,7 +47,8 @@ const initialGlobalState: AppRootStateType = {
                 order: 0,
                 priority: TaskPriorities.Low,
                 description: '',
-                completed: true
+                completed: true,
+                entityStatus: 'idle'
             }
         ],
         ["todolistId2"]: [
@@ -61,7 +63,8 @@ const initialGlobalState: AppRootStateType = {
                 order: 0,
                 priority: TaskPriorities.Low,
                 description: '',
-                completed: true
+                completed: true,
+                entityStatus: 'idle'
             },
             {
                 id: v1(),
@@ -74,7 +77,8 @@ const initialGlobalState: AppRootStateType = {
                 order: 0,
                 priority: TaskPriorities.Low,
                 description: '',
-                completed: true
+                completed: true,
+                entityStatus: 'idle'
             }
         ]
     },

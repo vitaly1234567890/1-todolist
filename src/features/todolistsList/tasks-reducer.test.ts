@@ -20,7 +20,8 @@ beforeEach(() => {
                     order: 0,
                     priority: TaskPriorities.Low,
                     description: '',
-                    completed: true
+                    completed: true,
+                    entityStatus: 'idle'
                 },
                 {
                     id: '2',
@@ -33,7 +34,8 @@ beforeEach(() => {
                     order: 0,
                     priority: TaskPriorities.Low,
                     description: '',
-                    completed: true
+                    completed: true,
+                    entityStatus: 'idle'
                 },
                 {
                     id: '3',
@@ -46,7 +48,8 @@ beforeEach(() => {
                     order: 0,
                     priority: TaskPriorities.Low,
                     description: '',
-                    completed: true
+                    completed: true,
+                    entityStatus: 'idle'
                 }
             ],
             'todolistId2': [
@@ -61,7 +64,8 @@ beforeEach(() => {
                     order: 0,
                     priority: TaskPriorities.Low,
                     description: '',
-                    completed: true
+                    completed: true,
+                    entityStatus: 'idle'
                 },
                 {
                     id: '2',
@@ -74,7 +78,8 @@ beforeEach(() => {
                     order: 0,
                     priority: TaskPriorities.Low,
                     description: '',
-                    completed: true
+                    completed: true,
+                    entityStatus: 'idle'
                 },
                 {
                     id: '3',
@@ -87,7 +92,8 @@ beforeEach(() => {
                     order: 0,
                     priority: TaskPriorities.Low,
                     description: '',
-                    completed: true
+                    completed: true,
+                    entityStatus: 'idle'
                 }
             ]
         }
@@ -116,7 +122,8 @@ test('correct task should be added to correct array', () => {
         priority: 0,
         startDate: "",
         id: "dfdfedf",
-        completed: false
+        completed: false,
+        entityStatus: 'idle'
     })
 
     const endState = tasksReducer(startState, action)

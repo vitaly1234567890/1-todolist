@@ -5,7 +5,6 @@ import ListItemSecondaryAction from "@mui/material/ListItemSecondaryAction";
 import HighlightOffIcon from "@mui/icons-material/HighlightOff";
 import {TaskStatuses, TaskType} from "../../../../api/todolist-api";
 
-
 type TaskPropsType = {
     tasks: TaskType
     removeTask: (todolistsID: string, taskId: string) => void
@@ -42,7 +41,11 @@ export const Task = memo((props: TaskPropsType) => {
                     <EditableSpan title={props.tasks.title} onChange={onChangeTaskTitleHandler}/>
                 </span>
                 <ListItemSecondaryAction>
-                    <IconButton onClick={onClickRemoveTaskHandler} size="small" color="primary">
+                    <IconButton
+                        onClick={onClickRemoveTaskHandler}
+                        size="small" color="primary"
+                        disabled={props.tasks.entityStatus === 'loading'}
+                         >
                         <HighlightOffIcon/>
                     </IconButton>
                 </ListItemSecondaryAction>
