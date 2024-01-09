@@ -21,13 +21,9 @@ import {amber} from '@mui/material/colors';
 import LightModeIcon from '@mui/icons-material/LightMode';
 import DarkModeIcon from '@mui/icons-material/DarkMode';
 import {
-    addTodolistAC,
-    changeTodolistFilterAC,
-    changeTodolistTitleAC, FilterValuesType,
-    removeTodolistAC,
-    TodolistsReducer
-} from "../features/todolistsList/todolists-reducer";
-import {addTaskAC, removeTaskAC, tasksReducer, updateTaskAC} from "../features/todolistsList/tasks-reducer";
+    FilterValuesType, todolistsActions, todolistsReducer,
+} from "../features/todolistsList/todolistsSlice";
+import {tasksActions, tasksReducer} from "../features/todolistsList/tasks-reducer";
 import {TaskPriorities, TaskStatuses} from "../api/todolist-api";
 import {v1} from "uuid";
 
@@ -36,7 +32,7 @@ function AppWithReducer() {
     let todolistID1 = crypto.randomUUID();
     let todolistID2 = crypto.randomUUID();
 
-    let [todolists, dispatchToTodolists] = useReducer(TodolistsReducer, [
+    let [todolists, dispatchToTodolists] = useReducer(todolistsReducer, [
         {id: todolistID1, title: 'What to learn', filter: 'All', addedDate: "", order: 0, entityStatus: "idle"},
         {id: todolistID2, title: 'What to buy', filter: 'All', addedDate: "", order: 0, entityStatus: "idle"},
     ])
@@ -67,61 +63,62 @@ function AppWithReducer() {
     const [isDark, setISDark] = useState(false)
 
     const addTask = (todolistID: string, title: string) => {
-        const action = addTaskAC({
-            todoListId: todolistID,
-            title: title,
-            status: TaskStatuses.New,
-            addedDate: '',
-            deadline: '',
-            description: '',
-            order: 0,
-            priority: 0,
-            startDate: "",
-            id: "dfdfedf",
-            completed: false,
-            entityStatus: 'idle'
+        const action = tasksActions.addTask({ task:{
+                todoListId: todolistID,
+                title: title,
+                status: TaskStatuses.New,
+                addedDate: '',
+                deadline: '',
+                description: '',
+                order: 0,
+                priority: 0,
+                startDate: "",
+                id: "dfdfedf",
+                completed: false,
+                entityStatus: 'idle'
+            }
         })
         dispatchToTasks(action)
     }
 
     const changeTaskStatus = (todolistsID: string, taskId: string, status: TaskStatuses) => {
-        let action = updateTaskAC(taskId, {status} , todolistsID)
+        let action = tasksActions.updateTask({ taskId, model: {status}, todolistId: todolistsID})
         dispatchToTasks(action)
     }
 
     const changeTaskTitle = (todolistsID: string, taskId: string, value: string) => {
-        let action = updateTaskAC(taskId, {title: value}, todolistsID)
+        let action = tasksActions.updateTask({taskId, model: {title: value}, todolistId: todolistsID})
         dispatchToTasks(action)
     }
 
     const removeTask = (todolistsID: string, taskId: string) => {
-        dispatchToTasks(removeTaskAC(taskId, todolistsID))
+        dispatchToTasks(tasksActions.removeTask({taskId, todolistId: todolistsID}))
     }
 
     const changeFilter = (todolistsID: string, nextFilterValue: FilterValuesType) => {
-        let action = changeTodolistFilterAC(todolistsID, nextFilterValue)
+        let action = todolistsActions.changeTodolistFilter({todolistId: todolistsID, filter: nextFilterValue})
         dispatchToTodolists(action)
     }
 
     const removeTodoList = (todolistsID: string) => {
-        let action = removeTodolistAC(todolistsID)
+        let action = todolistsActions.removeTodolist({todolistId: todolistsID})
         dispatchToTodolists(action)
-        dispatchToTasks(action)
     }
 
     const changeTodoListTitle = (todolistsID: string, newTitle: string) => {
-        dispatchToTodolists(changeTodolistTitleAC(todolistsID, newTitle))
+        dispatchToTodolists(todolistsActions.changeTodolistTitle({todolistId: todolistsID, title: newTitle}))
     }
 
     function addTodoList(title: string) {
-        let action = addTodolistAC({
-            id: v1(),
-            title: title,
-            addedDate: '',
-            order: 0,
+        let action = todolistsActions.addTodolist({
+            todolist: {
+                id: v1(),
+                title: title,
+                addedDate: '',
+                order: 0,
+            }
         })
         dispatchToTodolists(action)
-        dispatchToTasks(action)
     }
 
     const theme = createTheme({
@@ -170,7 +167,7 @@ function AppWithReducer() {
                         {todolists.map((el) => {
                             let taskForTodolist = tasks[el.id];
                             if (el.filter === "Active") {
-                                taskForTodolist = tasks[el.id].filter(t =>  t.status === TaskStatuses.New);
+                                taskForTodolist = tasks[el.id].filter(t => t.status === TaskStatuses.New);
                             }
                             if (el.filter === "Completed") {
                                 taskForTodolist = tasks[el.id].filter(t => t.status === TaskStatuses.Complited)
@@ -200,4 +197,5 @@ function AppWithReducer() {
         </div>
     );
 }
+
 export default AppWithReducer;

@@ -1,13 +1,12 @@
-import React, {FC, memo, useCallback, useEffect} from 'react';
+import React, {FC, memo, useCallback} from 'react';
 import {AddItemForm} from "../../../components/addItemForm/AddItemForm";
 import {EditableSpan} from "../../../components/editableSpan/EditableSpan";
 import {Button, IconButton, List, Paper, Typography} from "@mui/material";
 import DeleteForeverIcon from '@mui/icons-material/DeleteForever';
 import Task from "./task/Task";
 import {TaskStatuses, TaskType} from "../../../api/todolist-api";
-import {FilterValuesType, TodolistDomainType} from "../todolists-reducer";
-import {useAppDispatch} from "../../../app/store";
-import {setTasksTC} from "../tasks-reducer";
+import {FilterValuesType, TodolistDomainType} from "../todolistsSlice";
+
 
 type TodoListPropsType = {
     todolist: TodolistDomainType
@@ -53,7 +52,7 @@ export const TodoList: FC<TodoListPropsType> = memo((
     //     dispatch(setTasksTC(todolist.id))
     // }, []);
 
-    const listItems: Array<JSX.Element> = task.map(t =>
+    const listItems: Array<JSX.Element> = task?.map(t =>
         <Task key={t.id}
               tasks={t}
               changeTaskTitle={changeTaskTitle}
@@ -63,7 +62,7 @@ export const TodoList: FC<TodoListPropsType> = memo((
         />
     )
 
-    const tasksList: JSX.Element = tasks.length
+    const tasksList: JSX.Element = tasks?.length
         ? <List>{listItems}</List>
         : <span>Your tasklist is empty</span>
 

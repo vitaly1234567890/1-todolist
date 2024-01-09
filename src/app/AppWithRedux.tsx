@@ -20,13 +20,13 @@ import LightModeIcon from '@mui/icons-material/LightMode';
 import DarkModeIcon from '@mui/icons-material/DarkMode';
 import {TaskType} from "../api/todolist-api";
 import {TodolistsList} from "../features/todolistsList/TodolistsList";
-import {useSelector} from "react-redux";
-import {AppRootStateType, useAppDispatch} from "./store";
+import {useDispatch, useSelector} from "react-redux";
+import {AppDispatch, AppRootStateType} from "./store";
 import {ErrorSnackbar} from "../components/AppSnackbar/AppSnackbar";
 import {Login} from "../Login/Login";
 import {Navigate, Route, Routes} from "react-router-dom";
 import {log} from "util";
-import {logOutTC, meTC} from "../Login/auth-reducer";
+import {logOutTC, meTC} from "../Login/authSlice";
 
 export type TaskStateType = {
     [key: string]: Array<TaskType>
@@ -39,7 +39,7 @@ type PropsType = {
 function AppWithRedux({demo = false}: PropsType) {
 
     const status = useSelector<AppRootStateType>(state => state.app.status)
-    const dispatch = useAppDispatch()
+    const dispatch = useDispatch<AppDispatch>()
     const isInitialized = useSelector<AppRootStateType>(state => state.app.isInitialized)
     const isLoggedIn = useSelector<AppRootStateType>(state => state.auth.isLoggedIn)
 

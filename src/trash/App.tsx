@@ -23,7 +23,7 @@ import {amber, teal} from '@mui/material/colors';
 import LightModeIcon from '@mui/icons-material/LightMode';
 import DarkModeIcon from '@mui/icons-material/DarkMode';
 import {TaskPriorities, TaskStatuses, TaskType} from "../api/todolist-api";
-import {FilterValuesType, TodolistDomainType} from "../features/todolistsList/todolists-reducer";
+import {FilterValuesType, TodolistDomainType} from "../features/todolistsList/todolistsSlice";
 
 export type TaskStateType = {
     [key: string]: Array<TaskType>

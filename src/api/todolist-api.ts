@@ -1,6 +1,6 @@
 import axios, {AxiosResponse} from "axios";
 import {LoginType} from "../Login/Login";
-import {RequestStatusType} from "../app/app-reducer";
+import {RequestStatusType} from "../app/appSlice";
 
 const instanse = axios.create({
     baseURL: 'https://social-network.samuraijs.com/api/1.1',
