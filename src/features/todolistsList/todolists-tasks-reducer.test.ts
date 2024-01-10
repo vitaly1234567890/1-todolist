@@ -1,6 +1,6 @@
 import {TaskStateType} from "../../trash/App";
 import {TodolistDomainType, todolistsActions, todolistsReducer} from "./todolistsSlice";
-import {tasksReducer} from "./tasks-reducer";
+import {tasksSlice} from "./tasksSlice";
 import {v1} from "uuid";
 
 test('ids should be equals', () => {
@@ -15,7 +15,7 @@ test('ids should be equals', () => {
         }
     })
 
-    const endTasksState = tasksReducer(startTasksState, action)
+    const endTasksState = tasksSlice(startTasksState, action)
     const endTodolistsState = todolistsReducer(startTodolistsState, action)
 
     const keys = Object.keys(endTasksState)

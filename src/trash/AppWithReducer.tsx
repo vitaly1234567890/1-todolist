@@ -23,7 +23,7 @@ import DarkModeIcon from '@mui/icons-material/DarkMode';
 import {
     FilterValuesType, todolistsActions, todolistsReducer,
 } from "../features/todolistsList/todolistsSlice";
-import {tasksActions, tasksReducer} from "../features/todolistsList/tasks-reducer";
+import {tasksActions, tasksSlice} from "../features/todolistsList/tasksSlice";
 import {TaskPriorities, TaskStatuses} from "../api/todolist-api";
 import {v1} from "uuid";
 
@@ -37,7 +37,7 @@ function AppWithReducer() {
         {id: todolistID2, title: 'What to buy', filter: 'All', addedDate: "", order: 0, entityStatus: "idle"},
     ])
 
-    let [tasks, dispatchToTasks] = useReducer(tasksReducer, {
+    let [tasks, dispatchToTasks] = useReducer(tasksSlice, {
         [todolistID1]: [
             {
                 id: crypto.randomUUID(), title: "HTML&CSS", status: TaskStatuses.Complited, todoListId: todolistID1,

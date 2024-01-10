@@ -1,7 +1,7 @@
 import {todolistAPI, TodolistType} from "../../api/todolist-api";
 import {appActions, RequestStatusType} from "../../app/appSlice";
 import {handleServerNetworkError} from "../../utils/error-utils";
-import {setTasksTC} from "./tasks-reducer";
+import {setTasksTC} from "./tasksSlice";
 import {AppThunk} from "../../app/store";
 import {createSlice, PayloadAction} from "@reduxjs/toolkit";
 
@@ -39,7 +39,7 @@ const slice = createSlice({
             })
         },
         clearTodos: (state, action: PayloadAction) => {
-            state = []
+            return []
         },
     }
 })

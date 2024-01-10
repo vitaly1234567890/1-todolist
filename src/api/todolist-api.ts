@@ -30,36 +30,27 @@ export class AuthAPI {
 
 export const todolistAPI = {
     todolist() {
-        const promise =
-            instanse.get<TodolistType[]>('/todo-lists')
-        return promise
+        return instanse.get<TodolistType[]>('/todo-lists')
+
     },
     postTodolist(title: string) {
-        const promise =
-            instanse.post<ResponseType<{ item: TodolistType }>>('/todo-lists', {title: title})
-        return promise
+        return instanse.post<ResponseType<{ item: TodolistType }>>('/todo-lists', {title: title})
     },
     deleteTodolist(todolistId: string) {
-        const promise =
-            instanse.delete<ResponseType>(`/todo-lists/${todolistId}`)
-        return promise
+        return instanse.delete<ResponseType>(`/todo-lists/${todolistId}`)
     },
     updateTodolist(todolistId: string, title: string) {
-        const promise =
-            instanse.put<ResponseType>(`/todo-lists/${todolistId}`,
+        return instanse.put<ResponseType>(`/todo-lists/${todolistId}`,
                 {title: title})
-        return promise
     },
 
     task(todolistId: string) {
         return instanse.get<GetTasksResponse>(`/todo-lists/${todolistId}/tasks`)
     },
     postTask(todolistId: string, title: string) {
-        const promise =
-            instanse.post<ResponseType<{ item: TaskType }>>(`/todo-lists/${todolistId}/tasks`,
+        return instanse.post<ResponseType<{ item: TaskType }>>(`/todo-lists/${todolistId}/tasks`,
                 {title}
             )
-        return promise
     },
     deleteTask(todolistId: string, taskId: string) {
         return instanse.delete<ResponseType>(`/todo-lists/${todolistId}/tasks/${taskId}`)

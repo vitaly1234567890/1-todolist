@@ -54,7 +54,7 @@ const slice = createSlice({
                 })
             })
             .addCase(todolistsActions.clearTodos, (state, action) => {
-                state = {}
+                return {}
             })
     },
 
@@ -137,5 +137,5 @@ export type UpdateDomainTaskModelType = {
 }
 
 export const tasksActions = slice.actions
-export const tasksReducer = slice.reducer
+export const tasksSlice = slice.reducer
 

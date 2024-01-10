@@ -1,4 +1,4 @@
-import {tasksActions, tasksReducer} from './tasks-reducer'
+import {tasksActions, tasksSlice} from './tasksSlice'
 import {TaskStateType} from '../../trash/App'
 import {TaskPriorities, TaskStatuses} from "../../api/todolist-api";
 import {v1} from "uuid";
@@ -102,7 +102,7 @@ test('correct task should be deleted from correct array', () => {
 
     const action = tasksActions.removeTask({todolistId: 'todolistId2', taskId: '2' })
 
-    const endState = tasksReducer(startState, action)
+    const endState = tasksSlice(startState, action)
 
     expect(endState["todolistId1"].length).toBe(3)
     expect(endState["todolistId2"].length).toBe(2)
@@ -127,7 +127,7 @@ test('correct task should be added to correct array', () => {
         }
     })
 
-    const endState = tasksReducer(startState, action)
+    const endState = tasksSlice(startState, action)
 
     expect(endState['todolistId1'].length).toBe(3)
     expect(endState['todolistId2'].length).toBe(4)
@@ -139,7 +139,7 @@ test('status of specified task should be changed', () => {
 
     const action = tasksActions.updateTask({ taskId: '2', model: {status: TaskStatuses.New}, todolistId:  'todolistId2'})
 
-    const endState = tasksReducer(startState, action)
+    const endState = tasksSlice(startState, action)
 
     expect(endState['todolistId2'][1].status).toBe(TaskStatuses.New)
     expect(endState['todolistId1'][1].status).toBe(TaskStatuses.Complited)
@@ -148,7 +148,7 @@ test('title of specified task should be changed', () => {
 
     const action = tasksActions.updateTask({ taskId: '2', model: {title:'bread'}, todolistId: 'todolistId2'})
 
-    const endState = tasksReducer(startState, action)
+    const endState = tasksSlice(startState, action)
 
     expect(endState['todolistId2'][1].title).toBe('bread')
     expect(endState['todolistId1'][1].title).toBe('JS')
@@ -163,7 +163,7 @@ test('new array should be added when new todolist is added', () => {
         }
     })
 
-    const endState = tasksReducer(startState, action)
+    const endState = tasksSlice(startState, action)
 
     const keys = Object.keys(endState)
     const newKey = keys.find(k => k != 'todolistId1' && k != 'todolistId2')
@@ -179,7 +179,7 @@ test('property with todolistId should be deleted', () => {
 
     const action = todolistsActions.removeTodolist({todolistId: 'todolistId2'})
 
-    const endState = tasksReducer(startState, action)
+    const endState = tasksSlice(startState, action)
 
     const keys = Object.keys(endState)
 
