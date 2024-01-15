@@ -27,6 +27,7 @@ import {Login} from "../Login/Login";
 import {Navigate, Route, Routes} from "react-router-dom";
 import {log} from "util";
 import {logOutTC, meTC} from "../Login/authSlice";
+import {selectIsInitialized, selectIsLoggedIn, selectStatus} from "./app.selectors";
 
 export type TaskStateType = {
     [key: string]: Array<TaskType>
@@ -38,10 +39,11 @@ type PropsType = {
 
 function AppWithRedux({demo = false}: PropsType) {
 
-    const status = useSelector<AppRootStateType>(state => state.app.status)
+    const status = useSelector(selectStatus)
+    const isInitialized = useSelector(selectIsInitialized)
+    const isLoggedIn = useSelector(selectIsLoggedIn)
+
     const dispatch = useDispatch<AppDispatch>()
-    const isInitialized = useSelector<AppRootStateType>(state => state.app.isInitialized)
-    const isLoggedIn = useSelector<AppRootStateType>(state => state.auth.isLoggedIn)
 
     const [isDark, setISDark] = useState(false)
 

@@ -16,6 +16,7 @@ import {AddItemForm} from "../../components/addItemForm/AddItemForm";
 import {TodoList} from "./todolist/TodoList";
 import {TaskStateType} from "../../app/AppWithRedux";
 import {Navigate} from "react-router-dom";
+import {selectIsLoggedIn, selectTasks, selectTodolists} from "../../app/app.selectors";
 
 
 
@@ -23,12 +24,11 @@ type TodolistsListPropsType = {
     demo?: boolean
 }
 export const TodolistsList: React.FC<TodolistsListPropsType> = ({demo = false}) => {
-    let todolists = useSelector<AppRootStateType, Array<TodolistDomainType>>(state => state.todolists)
-
-    let tasks = useSelector<AppRootStateType, TaskStateType>(state => state.tasks)
+    const todolists = useSelector<AppRootStateType, Array<TodolistDomainType>>(selectTodolists)
+    const tasks = useSelector<AppRootStateType, TaskStateType>(selectTasks)
+    const isLoggedIn = useSelector(selectIsLoggedIn)
 
     const dispatch = useDispatch<AppDispatch>()
-    const isLoggedIn = useSelector<AppRootStateType>(state => state.auth.isLoggedIn)
 
     const addTask = useCallback((todolistID: string, title: string) => {
         dispatch(addTasksTC(todolistID, title))

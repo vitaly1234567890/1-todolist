@@ -42,8 +42,6 @@ export const AddItemForm = memo (({addItem, disabled = false}: AddItemFormPropsT
             value={newTaskTitle}
             onChange={onChangeHandler}
             onKeyDown={onKeyDownAddTask}
-            error={inputError}
-            helperText={inputError && userMessage}
         />
         <IconButton onClick={onClickAddTask} disabled={isAddBtnDisabled} size="small" color="primary">
             <PostAddIcon/>
