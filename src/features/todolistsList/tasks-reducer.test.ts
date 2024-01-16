@@ -1,4 +1,4 @@
-import {tasksActions, tasksSlice} from './tasksSlice'
+import {tasksSlice, tasksThunks} from './tasksSlice'
 import {TaskStateType} from '../../trash/App'
 import {TaskPriorities, TaskStatuses} from "../../api/todolist-api";
 import {v1} from "uuid";
@@ -100,7 +100,7 @@ beforeEach(() => {
 })
 test('correct task should be deleted from correct array', () => {
 
-    const action = tasksActions.removeTask({todolistId: 'todolistId2', taskId: '2' })
+    const action = tasksThunks.deleteTask.fulfilled({todolistId: 'todolistId2', taskId: '2' }, "requiredId", {todolistId: 'todolistId2', taskId: '2' })
 
     const endState = tasksSlice(startState, action)
 
@@ -110,8 +110,7 @@ test('correct task should be deleted from correct array', () => {
 });
 
 test('correct task should be added to correct array', () => {
-    // const action = addTaskAC('juce', 'todolistId2')
-    const action = tasksActions.addTask({ task:{
+    const action = tasksThunks.addTasks.fulfilled({ task:{
             todoListId: "todolistId2",
             title: 'juce',
             status: TaskStatuses.New,
@@ -125,7 +124,10 @@ test('correct task should be added to correct array', () => {
             completed: false,
             entityStatus: 'idle'
         }
-    })
+    },
+        "requestId",
+        {todolistId: "todolistId2", title: 'juce'}
+    )
 
     const endState = tasksSlice(startState, action)
 
@@ -137,7 +139,7 @@ test('correct task should be added to correct array', () => {
 })
 test('status of specified task should be changed', () => {
 
-    const action = tasksActions.updateTask({ taskId: '2', model: {status: TaskStatuses.New}, todolistId:  'todolistId2'})
+    const action = tasksThunks.updateTask.fulfilled({ taskId: '2', domainModel: {status: TaskStatuses.New}, todolistsID:  'todolistId2'}, "requestId", { taskId: '2', domainModel: {status: TaskStatuses.New}, todolistsID:  'todolistId2'})
 
     const endState = tasksSlice(startState, action)
 
@@ -146,7 +148,7 @@ test('status of specified task should be changed', () => {
 })
 test('title of specified task should be changed', () => {
 
-    const action = tasksActions.updateTask({ taskId: '2', model: {title:'bread'}, todolistId: 'todolistId2'})
+    const action = tasksThunks.updateTask.fulfilled({ taskId: '2', domainModel: {title:'bread'}, todolistsID: 'todolistId2'},"requestId", { taskId: '2', domainModel: {title:'bread'}, todolistsID: 'todolistId2'})
 
     const endState = tasksSlice(startState, action)
 

@@ -23,7 +23,7 @@ import DarkModeIcon from '@mui/icons-material/DarkMode';
 import {
     FilterValuesType, todolistsActions, todolistsReducer,
 } from "../features/todolistsList/todolistsSlice";
-import {tasksActions, tasksSlice} from "../features/todolistsList/tasksSlice";
+import {tasksActions, tasksSlice, tasksThunks} from "../features/todolistsList/tasksSlice";
 import {TaskPriorities, TaskStatuses} from "../api/todolist-api";
 import {v1} from "uuid";
 
@@ -63,7 +63,7 @@ function AppWithReducer() {
     const [isDark, setISDark] = useState(false)
 
     const addTask = (todolistID: string, title: string) => {
-        const action = tasksActions.addTask({ task:{
+        const action = tasksThunks.addTasks.fulfilled({ task:{
                 todoListId: todolistID,
                 title: title,
                 status: TaskStatuses.New,
@@ -77,22 +77,26 @@ function AppWithReducer() {
                 completed: false,
                 entityStatus: 'idle'
             }
-        })
+        },
+            "requestId",
+            {todolistId: "todolistId2", title: 'juce'}
+
+        )
         dispatchToTasks(action)
     }
 
     const changeTaskStatus = (todolistsID: string, taskId: string, status: TaskStatuses) => {
-        let action = tasksActions.updateTask({ taskId, model: {status}, todolistId: todolistsID})
+        let action = tasksThunks.updateTask.fulfilled({ taskId, domainModel: {status}, todolistsID: todolistsID}, "requiredId", { taskId, domainModel: {status}, todolistsID: todolistsID})
         dispatchToTasks(action)
     }
 
     const changeTaskTitle = (todolistsID: string, taskId: string, value: string) => {
-        let action = tasksActions.updateTask({taskId, model: {title: value}, todolistId: todolistsID})
+        let action = tasksThunks.updateTask.fulfilled({taskId, domainModel: {title: value}, todolistsID: todolistsID}, "requiredId", {taskId, domainModel: {title: value}, todolistsID: todolistsID})
         dispatchToTasks(action)
     }
 
     const removeTask = (todolistsID: string, taskId: string) => {
-        dispatchToTasks(tasksActions.removeTask({taskId, todolistId: todolistsID}))
+        dispatchToTasks(tasksThunks.deleteTask.fulfilled({taskId, todolistId: todolistsID}, "requiredId", {taskId, todolistId: todolistsID}))
     }
 
     const changeFilter = (todolistsID: string, nextFilterValue: FilterValuesType) => {

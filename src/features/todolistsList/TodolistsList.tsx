@@ -9,7 +9,7 @@ import {
     removeTodolistTC,
     TodolistDomainType, todolistsActions
 } from "./todolistsSlice";
-import {addTasksTC, deleteTaskTC, updateTaskTC} from "./tasksSlice";
+import {tasksThunks} from "./tasksSlice";
 import {TaskStatuses} from "../../api/todolist-api";
 import {Grid, Paper} from "@mui/material";
 import {AddItemForm} from "../../components/addItemForm/AddItemForm";
@@ -30,20 +30,20 @@ export const TodolistsList: React.FC<TodolistsListPropsType> = ({demo = false}) 
 
     const dispatch = useDispatch<AppDispatch>()
 
-    const addTask = useCallback((todolistID: string, title: string) => {
-        dispatch(addTasksTC(todolistID, title))
+    const addTask = useCallback((todolistId: string, title: string) => {
+        dispatch(tasksThunks.addTasks({todolistId, title}))
     }, [dispatch])
 
     const changeTaskStatus = useCallback((todolistsID: string, taskId: string, status: TaskStatuses) => {
-        dispatch(updateTaskTC(taskId, {status}, todolistsID))
+        dispatch(tasksThunks.updateTask({taskId, domainModel: {status}, todolistsID}))
     }, [dispatch])
 
-    const changeTaskTitle = useCallback((todolistsID: string, taskId: string, value: string) => {
-        dispatch(updateTaskTC(taskId, {title: value}, todolistsID))
+    const changeTaskTitle = useCallback((todolistsID: string, taskId: string, title: string) => {
+        dispatch(tasksThunks.updateTask({taskId, domainModel: {title} , todolistsID}))
     }, [dispatch])
 
-    const removeTask = useCallback((todolistsID: string, taskId: string) => {
-        dispatch(deleteTaskTC(todolistsID, taskId))
+    const removeTask = useCallback((todolistId: string, taskId: string) => {
+        dispatch(tasksThunks.deleteTask({todolistId, taskId}))
     }, [dispatch])
 
     const changeFilter = useCallback((todolistsID: string, nextFilterValue: FilterValuesType) => {
