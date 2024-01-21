@@ -121,17 +121,6 @@ const deleteTask = createAppAsyncThunk<
         }
     })
 
-// export const deleteTaskTC = (todolistId: string, taskId: string): AppThunk => (dispatch) => {
-//     dispatch(appActions.setAppStatus({status: 'loading'}))
-//     dispatch(tasksActions.changeTaskEntityStatus({todolistId, taskId, status: 'loading'}))
-//     todolistAPI.deleteTask(todolistId, taskId).then(res => {
-//         dispatch(tasksActions.removeTask({todolistId, taskId}))
-//         dispatch(appActions.setAppStatus({status: 'succeeded'}))
-//     }).catch((error) => {
-//         handleServerNetworkError(error, dispatch)
-//     })
-// }
-
 const updateTask = createAppAsyncThunk<
     UpdateTaskArg, UpdateTaskArg>(`${slice.name}/updateTask`,
     async (arg, thunkAPI) => {
