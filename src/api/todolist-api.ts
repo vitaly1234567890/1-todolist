@@ -41,16 +41,17 @@ export const todolistAPI = {
     },
     updateTodolist(todolistId: string, title: string) {
         return instanse.put<ResponseType>(`/todo-lists/${todolistId}`,
-                {title: title})
+            {title: title})
     },
 
     task(todolistId: string) {
         return instanse.get<GetTasksResponse>(`/todo-lists/${todolistId}/tasks`)
     },
-    postTask(todolistId: string, title: string) {
-        return instanse.post<ResponseType<{ item: TaskType }>>(`/todo-lists/${todolistId}/tasks`,
-                {title}
-            )
+
+    postTask(arg: AddTaskType) {
+        return instanse.post<ResponseType<{ item: TaskType }>>(`/todo-lists/${arg.todolistId}/tasks`,
+            {title: arg.title}
+        )
     },
     deleteTask(todolistId: string, taskId: string) {
         return instanse.delete<ResponseType>(`/todo-lists/${todolistId}/tasks/${taskId}`)
@@ -62,6 +63,11 @@ export const todolistAPI = {
 }
 
 // types
+
+export type AddTaskType = {
+    todolistId: string
+    title: string
+}
 
 export type UserType = {
     id: number
