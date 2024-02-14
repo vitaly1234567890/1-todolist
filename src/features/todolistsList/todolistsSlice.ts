@@ -59,16 +59,16 @@ export const getTodolistsTC = (): AppThunk => async (dispatch) => {
     }
 }
 
-export const removeTodolistTC = (todolistId: string): AppThunk => (dispatch) => {
+export const removeTodolistTC = (todolistId: string): AppThunk => async (dispatch) => {
     dispatch(appActions.setAppStatus({status: 'loading'}))
     dispatch(todolistsActions.changeTodolistEntityStatus({id: todolistId, status: 'loading'}))
-    todolistAPI.deleteTodolist(todolistId)
-        .then(res => {
-            dispatch(todolistsActions.removeTodolist({todolistId: todolistId}))
-            dispatch(appActions.setAppStatus({status: 'succeeded'}))
-        }).catch((error) => {
+    try {
+        await todolistAPI.deleteTodolist(todolistId)
+        dispatch(todolistsActions.removeTodolist({todolistId: todolistId}))
+        dispatch(appActions.setAppStatus({status: 'succeeded'}))
+    } catch (error) {
         handleServerNetworkError(error, dispatch)
-    })
+    }
 }
 
 export const addTodolistTC = (title: string): AppThunk => (dispatch) => {
