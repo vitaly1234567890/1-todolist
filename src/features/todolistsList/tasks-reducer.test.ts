@@ -1,8 +1,8 @@
 import {tasksSlice, tasksThunks} from './tasksSlice'
-import {TaskStateType} from '../../trash/App'
 import {TaskPriorities, TaskStatuses} from "../../api/todolist-api";
 import {v1} from "uuid";
 import {todolistsActions} from "./todolistsSlice";
+import {TaskStateType} from "../../app/AppWithRedux";
 
 let startState: TaskStateType
 beforeEach(() => {

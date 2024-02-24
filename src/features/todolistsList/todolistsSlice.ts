@@ -41,10 +41,13 @@ const slice = createSlice({
         clearTodos: (state, action: PayloadAction) => {
             return []
         },
-    }
+    },
 })
 
+
 //thunk
+
+
 export const getTodolistsTC = (): AppThunk => async (dispatch) => {
     dispatch(appActions.setAppStatus({status: 'loading'}))
     try {

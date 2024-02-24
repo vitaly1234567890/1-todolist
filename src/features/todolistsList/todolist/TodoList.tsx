@@ -32,7 +32,6 @@ export const TodoList: FC<TodoListPropsType> = memo((
         removeTodoList,
         changeTaskTitle,
         changeTodoListTitle,
-        demo = false
     }) => {
 
     let task = tasks
