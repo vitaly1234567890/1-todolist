@@ -1,6 +1,6 @@
 import {AddTaskType, TaskPriorities, TaskType, todolistAPI, UpdateTaskModelType} from "../../api/todolist-api";
-import {appActions, RequestStatusType} from "../../app/appSlice";
-import {createSlice, PayloadAction} from "@reduxjs/toolkit";
+import {appActions} from "../../app/appSlice";
+import {createSlice} from "@reduxjs/toolkit";
 import {todolistsActions} from "./todolistsSlice";
 import {createAppAsyncThunk, handleServerAppError, handleServerNetworkError} from "../../utils";
 import {TaskStateType} from "../../app/AppWithRedux";

@@ -46,8 +46,6 @@ const slice = createSlice({
 
 
 //thunk
-
-
 export const getTodolistsTC = (): AppThunk => async (dispatch) => {
     dispatch(appActions.setAppStatus({status: 'loading'}))
     try {
