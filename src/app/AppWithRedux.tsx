@@ -28,11 +28,9 @@ export type TaskStateType = {
     [key: string]: Array<TaskType>
 }
 
-type PropsType = {
-    demo?: boolean
-}
 
-function AppWithRedux({demo = false}: PropsType) {
+
+function AppWithRedux() {
 
     const status = useSelector(selectStatus)
     const isInitialized = useSelector(selectIsInitialized)
@@ -76,7 +74,7 @@ function AppWithRedux({demo = false}: PropsType) {
                 </AppBar>
                 <Container>
                     <Routes>
-                        <Route path={'/'} element={<TodolistsList demo={demo}/>}/>
+                        <Route path={'/'} element={<TodolistsList/>}/>
                         <Route path={'login'} element={<Login/>}/>
                         <Route path={'404'} element={<h1 style={{textAlign: "center"}}>Page not found 404</h1>}/>
                         <Route path={'*'} element={<Navigate to={'/404'}/>}/>

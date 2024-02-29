@@ -18,12 +18,7 @@ import {TaskStateType} from "../../app/AppWithRedux";
 import {Navigate} from "react-router-dom";
 import {selectIsLoggedIn, selectTasks, selectTodolists} from "../../app/app.selectors";
 
-
-
-type TodolistsListPropsType = {
-    demo?: boolean
-}
-export const TodolistsList: React.FC<TodolistsListPropsType> = ({demo = false}) => {
+export const TodolistsList = () => {
     const todolists = useSelector<AppRootStateType, Array<TodolistDomainType>>(selectTodolists)
     const tasks = useSelector<AppRootStateType, TaskStateType>(selectTasks)
     const isLoggedIn = useSelector(selectIsLoggedIn)
@@ -63,7 +58,7 @@ export const TodolistsList: React.FC<TodolistsListPropsType> = ({demo = false}) 
     }, [dispatch])
 
     useEffect(() => {
-        if(demo || !isLoggedIn) return
+        if(!isLoggedIn) return
         dispatch(getTodolistsTC())
     }, []);
 
@@ -92,7 +87,6 @@ export const TodolistsList: React.FC<TodolistsListPropsType> = ({demo = false}) 
                                     removeTodoList={removeTodoList}
                                     changeTaskTitle={changeTaskTitle}
                                     changeTodoListTitle={changeTodoListTitle}
-                                    demo={demo}
                                 />
                             </Paper>
                         </Grid>

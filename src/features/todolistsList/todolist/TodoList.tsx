@@ -18,7 +18,6 @@ type TodoListPropsType = {
     changeTaskStatus: (todolistsID: string, taskId: string, status: TaskStatuses) => void
     changeTaskTitle: (todolistsID: string, taskId: string, value: string) => void
     removeTodoList: (todolistsID: string) => void
-    demo?: boolean
 }
 
 export const TodoList: FC<TodoListPropsType> = memo((
